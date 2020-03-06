@@ -95,7 +95,7 @@ Los pasos para Windows, Linux y Mac OS son los mismos.
 3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
 1. Abrimos nues
 
-## Descarga de browser drivers
+### Descarga de browser drivers
 Cada uno de los navegadores compatibles con Selenium tiene su propio driver que le permite comunicarse con el navegador y debemos descargar el correspondiente según el navegador que utilicemos.
 Esta es una lista que redirige a sus sitios de descarga:
 - [Firefox](https://github.com/mozilla/geckodriver/releases/tag/v0.26.0) - Se ubican al final de la página.
@@ -105,3 +105,19 @@ Esta es una lista que redirige a sus sitios de descarga:
 - [Chrome](https://sites.google.com/a/chromium.org/chromedriver/) - La documentación de Chrome incluye la descarga correspondiente.
 - [Edge](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) - La documentación de Chrome incluye la descarga correspondiente.
 
+## "Hola, mundo!" en Selenium
+Estamos listos para hacer nuestra primer prueba con Selenium y validar que funciona correctamente.
+Para ello debemos colocar el siguiente código en nuestro editor de texto preferido si estamos utilizando Opera.
+
+**NOTA:**
+- Si estás utilizando un navegador distinto deberás cambiar el nombre del mismo después de `webdriver.Opera`
+- La ruta entre comillas de `excecutable_path =`indica la ruta donde se encuentra el driver de tu navegador. Tenerlo en la misma carpeta que tu script es buena ieda.
+
+```
+from selenium import webdriver
+
+driver = webdriver.Opera(executable_path = "./operadriver")
+driver.get("https://www.python.org")
+
+driver.close()
+```
