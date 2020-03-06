@@ -153,6 +153,51 @@ También podemos ubicar a los elementos como parte del DOM por:
 - Nombre del elemento
 
 ### XPath
-XPath es el lenguaje utilizado para identificar nodos en XML, extendiendo su uso a identificar elementos en HTML.
+XPath es el lenguaje utilizado para identificar nodos en XML, extendiendo su uso a identificar elementos en HTML. Estos pueden ser absolutos o relativos.
 
 Cómo última opción deberíamos ubicar a los elementos por su XPath, por ejemplo cuando no hay una forma explícita de identificarlos por medio de alguna de las opciones anteriores.
+
+Una forma rápida de obtenerlo es haciendo click en el elemento dentro del inspector de elementos y elegir copiar su XPath absoluto o relativo.
+
+## Encontrar elementos
+
+Al ver el botón "About" de https://www.python.org con el inspector de elementos vemos que tiene la siguiente estructura:
+`<a href="/about/" title="" class=" current_item selected selected">About</a>`
+
+Y su XPath es el siguiente:
+- Absoluto
+`/html/body/div/header/div/nav/ul/li[1]/a`
+- Relativo
+`//*[@id="about"]/a`
+
+Podemos apreciar el tipo de etiqueta HTML, sus atributos y valores de los atributos.
+
+La forma en que procedemos acceder a los elementos es con el comando `find_element_by` y contamos con diversas opciones:
+- class_name
+- css_selector
+- id
+- link_text
+- name
+- partial_link_name
+- tag_name
+- xpath
+
+Este botón podemos seleccionarlo escribiendo `find_element_by_link_text(¨About¨)` y lo almacenaremos en la variable `about_link` en caso de que deseemos usarlo.
+
+Si queremos hacer click en el podemos usar el comando `click()`
+
+Nuestro código ahora ser verá así:
+```
+from selenium import webdriver
+from time import sleep
+
+driver = webdriver.Opera(executable_path = "./operadriver")
+driver.get("https://www.python.org")
+
+about_link = driver.find_element_by_link_text("About")
+about_link.click()
+
+sleep(3)
+
+driver.close()
+```
