@@ -201,3 +201,26 @@ sleep(3)
 
 driver.close()
 ```
+
+## click(), TextBox, Submit Button, SendKeys() y click()
+Ahora que sabemos cómo identificar elementos y seleccionarlos podemos interactuar con ellos.
+
+### click()
+Si queremos hacer click en el botón `About` podemos usar el comando `click()`.
+Específicamente el comando sería `about_link.click()`, nuestro código ahora se vería así e ingresaremos a donde nos lleve el botón:
+
+```
+from selenium import webdriver
+from time import sleep
+
+driver = webdriver.Opera(executable_path = "./operadriver")
+driver.get("https://www.python.org")
+
+about_link = driver.find_element_by_link_text("About")
+about_link.click()
+
+sleep(3)
+
+driver.close()
+```
+
