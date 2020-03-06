@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Python-v3.7-yellow)
+![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-Tutorial-brightgreen)
 
 # Selenium Workshop
 Repositorio utilizado durante el taller presencial en Platzi Bogotá.
