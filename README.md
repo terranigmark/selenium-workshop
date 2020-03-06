@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-Tutorial-brightgreen)
+![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-WebDriver-brightgreen)
 
 # Selenium Workshop
 Repositorio utilizado durante el taller presencial en Platzi Bogotá.
@@ -66,3 +66,12 @@ A partir de este momento nos referiremos a WebDriver cómo "Selenium".
 - La mayoría de los recursos se limitan a Java
 
 ## Instalación
+### Instalación de Python
+#### Windows
+1. Dirigirse a la [sección de descargas en el sitio oficial de Python](https://www.python.org/downloads/)
+2. Descargar la versión 3.6 de Python o superior.
+3. Abrir el ejecutable de instalación.
+4. En la primer pantalla marcar la opción "Add Python 3.x to PATH.
+5. Elegir "Install now".
+6. Marcar todas las casillas en la opción "Optional features".
+7. Abrimos el cmd de windows, escribimos `python`y presionamos la tecla 'ENTER'
