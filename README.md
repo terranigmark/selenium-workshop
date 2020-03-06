@@ -1,5 +1,16 @@
-# selenium-platzi
+![](https://img.shields.io/badge/Python-v3.7-yellow)
+
+# Selenium Workshop
 Repositorio utilizado durante el taller presencial en Platzi Bogotá.
+
+## Requisitos
+Cualquiera de los siguientes navegadores instalados:
+- Firefox
+- Internet Explorer
+- Safari
+- Opera
+- Chrome
+- Edge
 
 ## Descripción
 Selenium es un framework que nos permite automatizar acciones en nuestro navegador, dando pie crear scripts que ayuden a realizar un proceso específico en forma automática o hacer pruebas en el frontend de un sitio web. Actualmente Selenium puede ser utilizado con distintos lenguajes, sin embargo la mayor parte de la documentación se encuentra hecha para Java y mi deseo es que otras personas que gustan del lenguaje Python comiencen a utilizarlo también.
@@ -46,10 +57,12 @@ A partir de este momento nos referiremos a WebDriver cómo "Selenium".
 - Posee una comunidad robusta
 - Cuenta con estándares de buenas prácticas
 
-## Desventajas
+### Desventajas
 - Requiere de cierto conocimiento en programación
 - No soporta nuevos navegadores tan rápido
 - No posee algún mecanismo de reportes
 - Debe generar una nueva instancia de navegador en cada uso
 - Es lento comparado con otros frameworks de testing
 - La mayoría de los recursos se limitan a Java
+
+## Instalación
