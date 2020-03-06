@@ -121,3 +121,38 @@ driver.get("https://www.python.org")
 
 driver.close()
 ```
+
+Seguro notaste como se abrio una ventana de navegador, cargó el sitio web que le indicamos y se cerró una vez cumplida esta tarea. Esto es porque Selenium tratará de ejecutar las instrucciones asignadas una a una tan rápido como nuestra computadora y conexión a internet lo logre.
+
+Podemos utilizar la librería `time`para colocar pausas explícitas, procurando no abusar de las mismas ya que esto haría nuestra tarea más lenta.
+
+```
+from selenium import webdriver
+from time import sleep
+
+driver = webdriver.Opera(executable_path = "./operadriver")
+driver.get("https://www.python.org")
+
+sleep(3)
+
+driver.close()
+```
+
+El módulo `sleep` de la librería `time`incluirá estas pausas indicando cuantos segundos durará.
+
+## Selectores
+Dentro de una interfaz gráfica en la web podemos ubicar los elementos de la misma respecto a sus selectores como:
+- ID
+- Nombre
+- Texto del link
+- Selector de CSS
+- Texto interior
+
+También podemos ubicar a los elementos como parte del DOM por:
+- ID del elemento
+- Nombre del elemento
+
+### XPath
+XPath es el lenguaje utilizado para identificar nodos en XML, extendiendo su uso a identificar elementos en HTML.
+
+Cómo última opción deberíamos ubicar a los elementos por su XPath, por ejemplo cuando no hay una forma explícita de identificarlos por medio de alguna de las opciones anteriores.
