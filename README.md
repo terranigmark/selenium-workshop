@@ -202,7 +202,7 @@ sleep(3)
 driver.close()
 ```
 
-## click(), TextBox, Submit Button, SendKeys() y click()
+## click(), TextBox y SendKeys()
 Ahora que sabemos cómo identificar elementos y seleccionarlos podemos interactuar con ellos.
 
 ### click()
@@ -224,3 +224,25 @@ sleep(3)
 driver.close()
 ```
 
+### TextBox
+¿Qué hacer si quiero hacer una búsqueda en el sitio de Python?
+La respuesta lógica es colocar un texto en la barra buscadora para encontrar lo que queremos.
+
+Esto es correcto, así que identificaremos ese TextBox, colocaremos un texto e iniciaremos la búsqueda.
+
+Inspeccionando el elemento encontramos sus atributos y valores:
+`<input id="id-search-field" name="q" type="search" role="textbox" class="search-field" placeholder="Search" value="" tabindex="1">`
+
+Usaremos su `id` para ubicarlo:
+`search_bar = driver.find_elements_by_id("id-search-field")`
+
+En caso de que haya algún texto en el TextBox podemos borrarlo con el método `clear()`
+`search_bar.clear()`
+
+Para ingresar texto a un Textbox debemos importar un módulo específico para ello:
+`from selenium.webdriver.common.keys import Keys`
+
+El comando para enviar texto es `send_keys()` sobre un elemento en el que nos ubiquemos:
+`search_bar.send_keys(¨dictionaries¨)`
+
+Nuestro código debe verse así ahora:
