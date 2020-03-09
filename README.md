@@ -1,6 +1,7 @@
 ![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-WebDriver-brightgreen)
 
-# Selenium Workshop
+# Selenium Workshop (Work In Progress)
+Este repositorio se mantiene en actualizacion.
 Repositorio utilizado durante el taller presencial en Platzi Bogotá.
 
 ## Requisitos
