@@ -16,6 +16,7 @@ Cualquiera de los siguientes navegadores instalados:
 ## Descripción
 Selenium es un framework que nos permite automatizar acciones en nuestro navegador, dando pie crear scripts que ayuden a realizar un proceso específico en forma automática o hacer pruebas en el frontend de un sitio web. Actualmente Selenium puede ser utilizado con distintos lenguajes, sin embargo la mayor parte de la documentación se encuentra hecha para Java y mi deseo es que otras personas que gustan del lenguaje Python comiencen a utilizarlo también.
 
+### Agenda
 Durante este taller abordaremos los siguientes temas:
 - Presentación
 - ¿Qué es Selenium?
@@ -25,7 +26,7 @@ Durante este taller abordaremos los siguientes temas:
 - Selectores
 - Encontrar elementos
 - TextBox, Submit Button, SendKeys() y click()
-- Checkbox y Radio Button
+- Unittest
 
 ## Presentación
 Mi nombre es Héctor Vega, soy un apasionado a los videojuegos, las artes marciales y la cerverza artesanal. Aprendí a programar mientras trabajaba en Recursos humanos de TI, fue cuando descubrí Python y no tenía la menor idea de a donde me llevaría esto.
@@ -173,7 +174,7 @@ Y su XPath es el siguiente:
 
 Podemos apreciar el tipo de etiqueta HTML, sus atributos y valores de los atributos.
 
-La forma en que procedemos acceder a los elementos es con el comando `find_element_by` y contamos con diversas opciones:
+La forma en que procedemos acceder a los elementos es con el método `find_element_by` y contamos con diversas opciones:
 - class_name
 - css_selector
 - id
@@ -185,7 +186,7 @@ La forma en que procedemos acceder a los elementos es con el comando `find_eleme
 
 Este botón podemos seleccionarlo escribiendo `find_element_by_link_text(¨About¨)` y lo almacenaremos en la variable `about_link` en caso de que deseemos usarlo.
 
-Si queremos hacer click en el podemos usar el comando `click()`
+Si queremos hacer click en el podemos usar el método `click()`
 
 Nuestro código ahora ser verá así:
 ```
@@ -203,12 +204,12 @@ sleep(3)
 driver.close()
 ```
 
-## click(), TextBox y SendKeys()
+## click(), TextBox y send_keys()
 Ahora que sabemos cómo identificar elementos y seleccionarlos podemos interactuar con ellos.
 
 ### click()
-Si queremos hacer click en el botón `About` podemos usar el comando `click()`.
-Específicamente el comando sería `about_link.click()`, nuestro código ahora se vería así e ingresaremos a donde nos lleve el botón:
+Si queremos hacer click en el botón `About` podemos usar el método `click()`.
+Específicamente el método sería `about_link.click()`, nuestro código ahora se vería así e ingresaremos a donde nos lleve el botón:
 
 ```
 from selenium import webdriver
@@ -240,10 +241,49 @@ Usaremos su `id` para ubicarlo:
 En caso de que haya algún texto en el TextBox podemos borrarlo con el método `clear()`
 `search_bar.clear()`
 
+### send_keys()
+
 Para ingresar texto a un Textbox debemos importar un módulo específico para ello:
 `from selenium.webdriver.common.keys import Keys`
 
-El comando para enviar texto es `send_keys()` sobre un elemento en el que nos ubiquemos:
+El método para enviar texto es `send_keys()` sobre un elemento en el que nos ubiquemos:
 `search_bar.send_keys(¨dictionaries¨)`
 
+También podemos "presionar" cualquier tecla con el método `send_keys(Keys.TECLA)`.
+Solo debemos reemplazar la palabra `TECLA` por otra.
+Por ejemplo `send_keys(Keys.ARROW_DOWN)`.
+
 Nuestro código debe verse así ahora:
+
+```
+#Librerías y módulos que importamos
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+
+#Crear una instancia del navegador almacenada en una variable para fácil uso
+driver = webdriver.Opera(executable_path = "./operadriver")
+#Dirigimos el navegador a https://www.python.org
+driver.get("https://www.python.org")
+
+#Identificamos el botón de 'About' por el texto del enlace y hacemos click en el
+about_link = driver.find_element_by_link_text("About")
+about_link.click()
+
+#Identificamos la barra de búsqueda por su id, borramos lo que haya en la misma,
+#escribimos la palabra 'dictionaries' y "presionamos" la tecla 'ENTER'
+search_bar = driver.find_elements_by_id("id-search-field")
+search_bar.clear()
+search_bar.send_keys(¨dictionaries¨)
+search_bar.send_keys(Keys.ENTER)
+
+#Creamos una pausa por 3 segundos
+sleep(3)
+
+#Cerramos la instancia del navegador
+driver.close()
+```
+
+Nuesto código cada vez va tomando forma y además incluimos comentarios para que podamos tener más claridad sobre lo que hacemos.
+
+## Unittest
