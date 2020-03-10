@@ -348,6 +348,11 @@ if __name__ == '__main__':
 Llegado a este punto nuestro código debe verse de la siguiente forma:
 
 ```
+#Librerías y módulos que importamos
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+
 class UsingUnittest(unittest.TestCase):
   
   #Asignamos nuestra instancia de navegador
