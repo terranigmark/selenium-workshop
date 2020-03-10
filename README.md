@@ -308,26 +308,26 @@ Suponiendo que nuestra clase se llame `UsingUnittest` quedaría así: `class Usi
 Ahora definiremos nuestro `método setUp` con el ejemplo que hemos trabajado:
 ```
 def setUp(self):
-  self.driver = webdriver.Opera(executable_path = "./operadriver")
+    self.driver = webdriver.Opera(executable_path = "./operadriver")
 ```
 
 Continuamos con nuestro método de prueba donde evaluaremos la apertura del sitio web y buscar el término "dictionaries":
 ```
 def test_search_dictionaries(self):
-  #Dirigimos el navegador a https://www.python.org 
-  self.driver = driver
-  driver.get("https://www.python.org")
+    #Dirigimos el navegador a https://www.python.org 
+    self.driver = driver
+    driver.get("https://www.python.org")
 
-  #Identificamos el botón de 'About' por el texto del enlace y hacemos click en el
-  about_link = driver.find_element_by_link_text("About")
-  about_link.click()
+    #Identificamos el botón de 'About' por el texto del enlace y hacemos click en el
+    about_link = driver.find_element_by_link_text("About")
+    about_link.click()
 
-  #Identificamos la barra de búsqueda por su id, borramos lo que haya en la misma,
-  #escribimos la palabra 'dictionaries' y "presionamos" la tecla 'ENTER'
-  search_bar = driver.find_elements_by_id("id-search-field")
-  search_bar.clear()
-  search_bar.send_keys(¨dictionaries¨)
-  search_bar.send_keys(Keys.ENTER)
+    #Identificamos la barra de búsqueda por su id, borramos lo que haya en la misma,
+    #escribimos la palabra 'dictionaries' y "presionamos" la tecla 'ENTER'
+    search_bar = driver.find_elements_by_id("id-search-field")
+    search_bar.clear()
+    search_bar.send_keys(¨dictionaries¨)
+    search_bar.send_keys(Keys.ENTER)
 ```
 
 **NOTA:** La variable `driver` del método `setUp` tiene un alcance dentro de si misma, por lo que debemos asignarla nuevamente a una variable dentro del método `test_search_dictionaries` para poderla utilizar.
@@ -349,6 +349,7 @@ Llegado a este punto nuestro código debe verse de la siguiente forma:
 
 ```
 #Librerías y módulos que importamos
+import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
@@ -356,31 +357,31 @@ from time import sleep
 class UsingUnittest(unittest.TestCase):
   
   #Asignamos nuestra instancia de navegador
-  def setUp(self):
-    self.driver = webdriver.Opera(executable_path = "./operadriver")
+    def setUp(self):
+      self.driver = webdriver.Opera(executable_path = "./operadriver")
     
-  def test_search_dictionaries(self):
-    #Dirigimos el navegador a https://www.python.org 
-    self.driver = driver
-    driver.get("https://www.python.org")
+    def test_search_dictionaries(self):
+      #Dirigimos el navegador a https://www.python.org 
+      driver = self.driver
+      driver.get("https://www.python.org")
 
-    #Identificamos el botón de 'About' por el texto del enlace y hacemos click en el
-    about_link = driver.find_element_by_link_text("About")
-    about_link.click()
+      #Identificamos el botón de 'About' por el texto del enlace y hacemos click en el
+      about_link = driver.find_element_by_link_text("About")
+      about_link.click()
 
-    #Identificamos la barra de búsqueda por su id, borramos lo que haya en la misma,
-    #escribimos la palabra 'dictionaries' y "presionamos" la tecla 'ENTER'
-    search_bar = driver.find_elements_by_id("id-search-field")
-    search_bar.clear()
-    search_bar.send_keys(¨dictionaries¨)
-    search_bar.send_keys(Keys.ENTER)
+      #Identificamos la barra de búsqueda por su id, borramos lo que haya en la misma,
+      #escribimos la palabra 'dictionaries' y "presionamos" la tecla 'ENTER'
+      search_bar = driver.find_elements_by_id("id-search-field")
+      search_bar.clear()
+      search_bar.send_keys("dictionaries")
+      search_bar.send_keys(Keys.ENTER)
     
-  def tearDown(self):
-    print('Browser is about to close...')
-    sleep(3)
-    self.driver.close()
+    def tearDown(self):
+      print('Browser is about to close...')
+      sleep(3)
+      self.driver.close()
   
- if __name__ == '__main__':
+if __name__ == '__main__':
     unittest.main()
 
 ```
