@@ -4,6 +4,9 @@
 Este repositorio se mantiene en actualizacion.
 Repositorio utilizado durante el taller presencial en Platzi Bogotá como tutorial para iniciarse en el uso de Selenium con Python.
 
+## ¿Quieres más ejemplos de Selenium?
+Si ya hiciste este tutorial y quieres ver más ejemplos aplicados de Selenium + Python, te invito que visites este repositorio: https://github.com/linnk99/the-internet
+
 ## Requisitos
 Cualquiera de los siguientes navegadores instalados:
 - Firefox
