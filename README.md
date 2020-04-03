@@ -100,6 +100,7 @@ Los pasos para Windows, Linux y Mac OS son los mismos.
 3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
 
 ### Instalación de PyUnitReport
+PyUnitReport es un test runner de pruebas unitarias que genera reportes en HTML. Esto lo hace más fácil de compartir y visualizar para que otras personas puedan analizar nuestros reportes de pruebas.
 Los pasos para Windows, Linux y Mac OS son los mismos.
 1. Abrimos nuestra terminal.
 2. Ejecutamos el comando `pip3 install PyUnitReport`.
@@ -149,6 +150,94 @@ driver.close()
 ```
 
 El módulo `sleep` de la librería `time`incluirá estas pausas indicando cuantos segundos durará.
+
+## Unit Testing
+Realizar pruebas unitaras en tus automatizaciones es una gran ayuda, ya que de esta forma puedes saber que está 
+ocurriendo en cada paso (caso de prueba/test case), obtener un resultado de cada una y tomar decisiones al respecto.
+
+En esta ocasión te apoyarás de Unittest y PyUnitReport.
+
+### Unittest
+Unittest, también conocido cómo PyUnit, es un framework de testing para pruebas unitarias inspirado en JUnit y es común encontrar este tipo de frameworks en otros lenguajes donde comparten características similares. Este es un gran complemento, considerando que Selenium no brinda información adicional sobre lo que hacemos.
+
+Con Unittest podemos crear pruebas que se componen las siguientes partes:
+- Método `setUp` - Definimos instrucciones que se realizarán antes de nuestras pruebas. Aquí es donde prepararemos nuestro entorno, generalmente configurar y crear la instancia de nuestro navegador.
+- Métodos de prueba - Estas serán la parte del código que evualará Unittest, debemos definirla como funciones, llevarán el prefijo `test_` y dentro de esta las acciones que queremos evaluar. Por ejemplo `def test_sending_text(self):`
+- Método `tearDown`- Definimos instrucciones que se realizarán después de nuestras pruebas. Cómo puede ser un mensaje para comunicar que hemos terminado con las pruebas y cerrar la instancia del navegador.
+- `unittest.main()` - Esta es una interfaz de de línea de comandos que nos mostrará detalles cómo la cantidad de tests ejecutados y el tiempo de evaluación. Se coloca al final de nuestro código cómo si llamáramos al método `main`.
+
+Al final lizar las pruebas obtenemos un reporte de resultados.
+Los resultados de las pruebas pueden ser tres distintos:
+- **OK** - La prueba terminó de forma satisfactoria.
+- **FAIL** - La prueba no terminó de forma satisfactoria, se levantará la excepción que hayamos asignado.
+- **ERROR** - La prueba no terminó exitosamente y está fuera de nuestras excepciones.
+
+### Implementando Unittest
+Llamaremos a Unittest por medio de una clase en la cual colocaremos la subclase `unittest.TestCase`.
+Suponiendo que nuestra clase de prueba se llame `UsingUnittest` quedaría así: `class UsingUnittest(unittest.TestCase):`.
+
+Ahora definiremos nuestro `método setUp` con el ejemplo que hemos trabajado:
+```
+def setUp(self):
+    self.driver = webdriver.Opera(executable_path = "./operadriver")
+    driver = self.driver
+```
+
+Continuamos con nuestro método de prueba donde evaluaremos la apertura del sitio web:
+```
+def test_get_ptyhon_website(self):
+    driver = self.driver
+    driver.get("https://www.python.org")
+```
+
+**NOTA:**
+La variable `driver` del método `setUp` tiene un alcance dentro de si misma, por lo que debemos asignarla nuevamente a una variable dentro del método `test_get_ptyhon_website` para poderla utilizar.
+De la misma forma todas las funciones de nuestro caso de prueba deben iniciar con la palabra `test` para ser reconocidas por Unittest
+
+Terminamos llamando al método `tearDown` y nuestro método `main`:
+```
+def tearDown(self):
+  print('Browser is about to close...')
+  sleep(3)
+  self.driver.close()
+  
+if __name__ == '__main__':
+  unittest.main(verbosity = 2)
+```
+
+Siempre es buena idea comunicar a través de algún medio que estás terminando la prueba, tomar una pausa y después cerrar la instancia del navegador para evitar exceso en el uso de recursos de tu equipo. 
+Por otro lado la bandera `verbosity` con el parámetro `2` nos otorgará más detalles en el reporte de Unittest.
+
+### Caso de prueba listo
+Hasta este punto tu código debe de verse así:
+```
+from selenium import webdriver
+from time import sleep
+
+class UsingUnnittest(unittest.Testcase):
+
+    def setUp(self):
+        self.driver = webdriver.Opera(executable_path = "./operadriver")
+        driver = self.driver
+        
+    def test_get_ptyhon_website(self):
+        driver = self.driver
+        driver.get("https://www.python.org")
+        
+    def tearDown(self):
+        print('Browser is about to close...')
+        sleep(3)
+        self.driver.close()
+  
+if __name__ == '__main__':
+  unittest.main(verbosity = 2)
+```
+
+### PyUnitReport
+Este es un test runner, el cual se encargará de analizar nuestra clase y casos de prueba para ensamblarlos en un reporte escrito en HTML. Este mostrará los resultados con datos relevantes cómo fecha en que se generó, tiempo de ejecución, status de los casos de prueba, códigos de colores para su fácil identificación y también detalles de los mismos.
+
+Podemos implementar PyUnitReport fácilmente si lo colocamos en el método `unittest.main()` utilizando la palabra reservada `testRunner` de la siguiente forma:
+`unittest.main(testRunner = HTMLTestRunner)`
 
 ## Selectores
 Dentro de una interfaz gráfica en la web podemos ubicar los elementos de la misma respecto a sus selectores como:
