@@ -2,7 +2,7 @@
 
 # Selenium Workshop (Work In Progress)
 Este repositorio se mantiene en actualizacion.
-Repositorio utilizado durante el taller presencial en Platzi Bogotá como tutorial para iniciarse en el uso de Selenium con Python.
+Repositorio utilizado durante el taller presencial en Platzi Bogotá como tutorial para iniciarse en el uso de Selenium con Python y PyUnitReport.
 
 ## ¿Quieres más ejemplos de Selenium?
 Si ya hiciste este tutorial y quieres ver más ejemplos aplicados de Selenium + Python, te invito que visites este repositorio: https://github.com/linnk99/the-internet
@@ -17,7 +17,7 @@ Cualquiera de los siguientes navegadores instalados:
 - Edge
 
 ## Descripción
-Selenium es un framework que nos permite automatizar acciones en nuestro navegador, dando pie crear scripts que ayuden a realizar un proceso específico en forma automática o hacer pruebas en el frontend de un sitio web. Actualmente Selenium puede ser utilizado con distintos lenguajes, sin embargo la mayor parte de la documentación se encuentra hecha para Java y mi deseo es que otras personas que gustan del lenguaje Python comiencen a utilizarlo también.
+Selenium es un framework que nos permite automatizar acciones en nuestro navegador, dando pie crear scripts que ayuden a realizar un proceso específico en forma automática o hacer pruebas en el frontend de un sitio web. Actualmente Selenium puede ser utilizado con distintos lenguajes, sin embargo la mayor parte de la documentación se encuentra hecha para Java y mi deseo es que otras personas que gustan del lenguaje Python comiencen a utilizarlo también PyUnitReport cómo librería para generar reportes de pruebas en HTML.
 
 ### Agenda
 Durante este taller abordaremos los siguientes temas:
@@ -26,10 +26,10 @@ Durante este taller abordaremos los siguientes temas:
 - Ventajas y desventajas de Selenium
 - Instalación y Descargas
 - "Hola, mundo!" en Selenium
+- Unittest
 - Selectores
 - Encontrar elementos
 - TextBox, Submit Button, SendKeys() y click()
-- Unittest
 
 ## Presentación
 Mi nombre es Héctor Vega, soy un apasionado a los videojuegos, las artes marciales y la cerverza artesanal. Aprendí a programar mientras trabajaba en Recursos humanos de TI, fue cuando descubrí Python y no tenía la menor idea de a donde me llevaría esto.
@@ -98,7 +98,12 @@ Los pasos para Windows, Linux y Mac OS son los mismos.
 1. Abrimos nuestra terminal.
 2. Ejecutamos el comando `pip3 install selenium`.
 3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
-1. Abrimos nues
+
+### Instalación de PyUnitReport
+Los pasos para Windows, Linux y Mac OS son los mismos.
+1. Abrimos nuestra terminal.
+2. Ejecutamos el comando `pip3 install PyUnitReport`.
+3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
 
 ### Descarga de browser drivers
 Cada uno de los navegadores compatibles con Selenium tiene su propio driver que le permite comunicarse con el navegador y debemos descargar el correspondiente según el navegador que utilicemos.
@@ -390,4 +395,4 @@ if __name__ == '__main__':
 ```
 
 ## ¿Te funcionó el código?
-Me encantaría ver un pull-request con el reporte de tu prueba.
+Me encantaría que colocaras una estrella a este repositorio si te fue de utilidad 😄
