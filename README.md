@@ -414,66 +414,6 @@ sleep(3)
 driver.close()
 ```
 
-Nuesto código cada vez va tomando forma y además incluimos comentarios para que podamos tener más claridad sobre lo que hacemos.
-
-## Unittest
-Unittest, también conocido cómo PyUnit, es un framework de testing para pruebas unitarias inspirado en JUnit y es común encontrar este tipo de frameworks en otros lenguajes donde comparten características similares. Este es un gran complemento, considerando que Selenium no brinda información adicional sobre lo que hacemos.
-
-Con Unittest podemos crear pruebas que se componen las siguientes partes:
-- Método `setUp` - Definimos instrucciones que se realizarán antes de nuestras pruebas. Aquí es donde prepararemos nuestro entorno, generalmente configurar y crear la instancia de nuestro navegador.
-- Métodos de prueba - Estas serán la parte del código que evualará Unittest, debemos definirla como funciones, llevarán el prefijo `test_` y dentro de esta las acciones que queremos evaluar. Por ejemplo `def test_sending_text(self):`
-- Método `tearDown`- Definimos instrucciones que se realizarán después de nuestras pruebas. Cómo puede ser un mensaje para comunicar que hemos terminado con las pruebas y cerrar la instancia del navegador.
-- `unittest.main()` - Esta es una interfaz de de línea de comandos que nos mostrará detalles cómo la cantidad de tests ejecutados y el tiempo de evaluación. Se coloca al final de nuestro código cómo si llamáramos al método `main`.
-
-Al final lizar las pruebas obtenemos un reporte de resultados.
-Los resultados de las pruebas pueden ser tres distintos:
-- **OK** - La prueba terminó de forma satisfactoria.
-- **FAIL** - La prueba no terminó de forma satisfactoria, en caso de que lancemos alguna excepción.
-- **ERROR** - La prueba no terminó exitosamente y está fuera de nuestras excepciones.
-
-### Implementando Unittest
-Llamaremos a Unittest por medio de una clase en la cual colocaremos la subclase `unittest.TestCase`.
-Suponiendo que nuestra clase se llame `UsingUnittest` quedaría así: `class UsingUnittest(unittest.TestCase):`.
-
-Ahora definiremos nuestro `método setUp` con el ejemplo que hemos trabajado:
-```
-def setUp(self):
-    self.driver = webdriver.Opera(executable_path = "./operadriver")
-```
-
-Continuamos con nuestro método de prueba donde evaluaremos la apertura del sitio web y buscar el término "dictionaries":
-```
-def test_search_dictionaries(self):
-    #Dirigimos el navegador a https://www.python.org 
-    self.driver = driver
-    driver.get("https://www.python.org")
-
-    #Identificamos el botón de 'About' por el texto del enlace y hacemos click en el
-    about_link = driver.find_element_by_link_text("About")
-    about_link.click()
-
-    #Identificamos la barra de búsqueda por su id, borramos lo que haya en la misma,
-    #escribimos la palabra 'dictionaries' y "presionamos" la tecla 'ENTER'
-    search_bar = driver.find_elements_by_id("id-search-field")
-    search_bar.clear()
-    search_bar.send_keys(¨dictionaries¨)
-    search_bar.send_keys(Keys.ENTER)
-```
-
-**NOTA:** La variable `driver` del método `setUp` tiene un alcance dentro de si misma, por lo que debemos asignarla nuevamente a una variable dentro del método `test_search_dictionaries` para poderla utilizar.
-
-Terminamos llamando al método `tearDown` y nuestro método `main`.
-
-```
-def tearDown(self):
-  print('Browser is about to close...')
-  sleep(3)
-  self.driver.close()
-  
-if __name__ == '__main__':
-  unittest.main()
-```
-
 ## Código final
 Llegado a este punto nuestro código debe verse de la siguiente forma:
 
