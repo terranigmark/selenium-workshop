@@ -236,8 +236,41 @@ if __name__ == '__main__':
 ### PyUnitReport
 Este es un test runner, el cual se encargará de analizar nuestra clase y casos de prueba para ensamblarlos en un reporte escrito en HTML. Este mostrará los resultados con datos relevantes cómo fecha en que se generó, tiempo de ejecución, status de los casos de prueba, códigos de colores para su fácil identificación y también detalles de los mismos.
 
+### Implementando PyUnitReport
+Primero debemos importar el test runner con el comando `from pyunitreport import HTMLTestRunner`.
+
 Podemos implementar PyUnitReport fácilmente si lo colocamos en el método `unittest.main()` utilizando la palabra reservada `testRunner` de la siguiente forma:
 `unittest.main(testRunner = HTMLTestRunner)`
+
+Cuentas con tres parámetros, donde el único obligatorio es `output`, para especificar el directorio donde se guardará el reporte. También puedes utilizar el parámetro `report_name` para dar un nombre a tu reporte, o por defecto colocará la fecha y hora en que se generó. Si quieres utilizar el modo "failfast" puedes hacerlo colocando el parámetro `failfast` con valor `True`
+
+La función main debe ser cómo esta entonces:
+`unittest.main(testRunner = HTMLTestRunner(output = 'Reports', report_name = 'python-website-report', failfast = True))`
+
+Si tu código es idéntico al siguiente entonces tendrás una carpeta llamada `Reports` con un archivo HTML de nombre `python-website-test` y toda la información de tu prueba hasta ahora:
+```
+from selenium import webdriver
+from time import sleep
+from pyunitreport import HTMLTestRunner
+
+class UsingUnnittest(unittest.Testcase):
+
+    def setUp(self):
+        self.driver = webdriver.Opera(executable_path = "./operadriver")
+        driver = self.driver
+        
+    def test_get_ptyhon_website(self):
+        driver = self.driver
+        driver.get("https://www.python.org")
+        
+    def tearDown(self):
+        print('Browser is about to close...')
+        sleep(3)
+        self.driver.close()
+  
+if __name__ == '__main__':
+  unittest.main(testRunner = HTMLTestRunner(output = 'Reports', report_name = 'python-website-report', failfast = True))
+```
 
 ## Selectores
 Dentro de una interfaz gráfica en la web podemos ubicar los elementos de la misma respecto a sus selectores como:
@@ -444,44 +477,7 @@ if __name__ == '__main__':
 ## Código final
 Llegado a este punto nuestro código debe verse de la siguiente forma:
 
-```
-#Librerías y módulos que importamos
-import unittest
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from time import sleep
-
-class UsingUnittest(unittest.TestCase):
-  
-  #Asignamos nuestra instancia de navegador
-    def setUp(self):
-      self.driver = webdriver.Opera(executable_path = "./operadriver")
-    
-    def test_search_dictionaries(self):
-      #Dirigimos el navegador a https://www.python.org 
-      driver = self.driver
-      driver.get("https://www.python.org")
-
-      #Identificamos el botón de 'About' por el texto del enlace y hacemos click en el
-      about_link = driver.find_element_by_link_text("About")
-      about_link.click()
-
-      #Identificamos la barra de búsqueda por su id, borramos lo que haya en la misma,
-      #escribimos la palabra 'dictionaries' y "presionamos" la tecla 'ENTER'
-      search_bar = driver.find_elements_by_id("id-search-field")
-      search_bar.clear()
-      search_bar.send_keys("dictionaries")
-      search_bar.send_keys(Keys.ENTER)
-    
-    def tearDown(self):
-      print('Browser is about to close...')
-      sleep(3)
-      self.driver.close()
-  
-if __name__ == '__main__':
-    unittest.main()
-
-```
+WORK IN PROGRESS
 
 ## ¿Te funcionó el código?
 Me encantaría que colocaras una estrella a este repositorio si te fue de utilidad 😄
