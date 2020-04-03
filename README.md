@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-WebDriver-brightgreen)
+![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-WebDriver-brightgreen) ![](https://img.shields.io/badge/PyUnitReport-Unit%20Testing-brightgreen)
 
 # Selenium Workshop (Work In Progress)
 Este repositorio se mantiene en actualizacion.
