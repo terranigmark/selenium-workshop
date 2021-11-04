@@ -245,10 +245,10 @@ Tu siguiente reto será practicar con un sitio diseñado para automatizaciones, 
 
 ### El reto
 Crea un script de pruebas donde tengas los métodos `setUp` y `tearDown`que ya hemos utilizado pero además los siguientes:
-- `test_search_text_field' que ubique el campo de búsqueda a través de su id.
-- `test_search_text_field_by_name' que ubique el campo de búsqueda a través de su atributo `name`.
-- `test_search_text_field_by_class_name' que ubique el campo de búsqueda a través de su nombre de clase.
-- `test_search_text_field_button' que ubique el botón de la barra de búsqueda con forma de 🔍 por su nombre clase.
+- `test_search_text_field` que ubique el campo de búsqueda a través de su id.
+- `test_search_text_field_by_name` que ubique el campo de búsqueda a través de su atributo `name`.
+- `test_search_text_field_by_class_name` que ubique el campo de búsqueda a través de su nombre de clase.
+- `test_search_text_field_button` que ubique el botón de la barra de búsqueda con forma de 🔍 por su nombre clase.
 - `test_count_promo_banners` que ubique el elemento que contiene los 3 cuadros de promociones ("Home & Decor", "Shop Private Sales" y "Travel Gear") por su nombre de clase. Después ubica las 3 imágenes que representa cada banner en solo localizador, deberás utilizar `find_elements` (en plural).
 - `test_vip_promo`que ubique una de las imágenes del carrusel por su XPath.
 - `test_shopping_cart_icon` que ubique el ícono del carrito de compras por su selector de CSS.
