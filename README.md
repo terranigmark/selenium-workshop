@@ -1,86 +1,185 @@
-![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-WebDriver-brightgreen) ![](https://img.shields.io/badge/PyUnitReport-Unit%20Testing-brightgreen)
+# 3. Comandos Básicos
+## Unit Testing
+Realizar pruebas unitaras en tus automatizaciones es una gran ayuda, ya que de esta forma puedes saber que está 
+ocurriendo en cada paso (caso de prueba/test case), obtener un resultado de cada una y tomar decisiones al respecto.
 
-# Selenium Workshop (Work In Progress)
-Este repositorio se mantiene en constante actualizacion y es utilizado como tutorial para iniciarse en el uso de Selenium con Python.
+En esta ocasión te apoyarás de Unittest y PyUnitReport.
 
-## ¿Cómo puedo utilizar este repositorio?
-En la rama por default se ubica este README.md con la información general del repositorio. Navegando entre las distintas ramas y el orden numerado podrás encontrar los contenidos del tutorial como los archivos generados. Es recomendable que sigas las instrucciones en el orden de cada una.
+### Unittest
+Unittest, también conocido cómo PyUnit, es un módulo de testing para pruebas unitarias inspirado en JUnit y es común encontrar este tipo de frameworks en otros lenguajes donde comparten características similares. Este es un gran complemento, considerando que Selenium no brinda información adicional sobre lo que hacemos.
 
-## Requisitos
-Cualquiera de los siguientes navegadores instalados:
-- Firefox
-- Safari
-- Opera
-- Chrome
-- Edge
+Con Unittest podemos crear pruebas que se componen las siguientes partes:
+- Método `setUp`: Definimos instrucciones que se realizarán antes de nuestras pruebas. Aquí es donde prepararemos nuestro entorno, generalmente configurar y crear la instancia de nuestro navegador "limpia".
+- Métodos de prueba: Será la parte del código que evualará Unittest, debemos definirla cómo métodos, llevarán el prefijo `test` y dentro de esta las acciones que queremos evaluar. Por ejemplo `def test_sending_text(self):`
+- Método `tearDown`: Definimos instrucciones que se realizarán después de nuestras pruebas. Cómo puede ser un mensaje para comunicar que hemos terminado con las pruebas y cerrar la instancia del navegador.
+- `unittest.main()` - Esta es una interfaz de de línea de comandos que nos mostrará detalles cómo la cantidad de tests ejecutados y el tiempo de evaluación. Se coloca al final de nuestro código cómo si llamáramos al método `main`.
 
-## Descripción
-Selenium es un conjunto de herramientas que nos permite automatizar acciones en nuestro navegador, dando pie a crear scripts que ayuden a realizar un proceso específico en forma automática o hacer pruebas en el frontend de un sitio web. Actualmente Selenium puede ser utilizado con distintos lenguajes, sin embargo la mayor parte de la documentación se encuentra hecha para Java y mi deseo es que otras personas que gustan del lenguaje Python comiencen a utilizarlo también PyUnitReport cómo librería para generar reportes de pruebas en formato HTML.
+Al final lizar las pruebas obtenemos un reporte de resultados.
+Los resultados de las pruebas pueden ser tres distintos:
+- **OK** - La prueba terminó de forma satisfactoria.
+- **FAIL** - La prueba no terminó de forma satisfactoria, se levantará la excepción que hayamos asignado.
+- **ERROR** - La prueba no terminó exitosamente y está fuera de nuestras excepciones.
 
-### Agenda
-Durante este taller abordaremos los siguientes temas:
-#### 1. Para iniciar
-- Presentación
-- ¿Qué es Selenium?
-- Ventajas y desventajas de Selenium
+### Implementando Unittest
+Llamaremos a Unittest por medio de una clase en la cual colocaremos la subclase `unittest.TestCase`.
+Suponiendo que nuestra clase de prueba se llame `UsingUnittest` quedaría así: `class UsingUnittest(unittest.TestCase):`.
 
-#### 2. Preparación del entorno de trabajo
-- Instalación y Descargas
-- "Hola, mundo!" en Selenium
+Ahora definiremos nuestro `método setUp` con el ejemplo que hemos trabajado:
+```
+def setUp(self):
+    self.driver = webdriver.Opera(executable_path = "./operadriver")
+    driver = self.driver
+```
 
-#### 3. Comandos básicos
-- Unittest
-- Selectores
-- Localizar elementos
+Continuamos con nuestro método de prueba donde evaluaremos la apertura del sitio web:
+```
+def test_get_ptyhon_website(self):
+    driver = self.driver
+    driver.get("https://www.python.org")
+```
 
-#### 4. Interactual con elementos
-- TextBox, Submit Button, SendKeys() y click()
-- CheckBox, Form, RadioButton
-- Dropdown
-- Alert y Pop-Up
-- Navegación en la ventana
+**NOTA:**
+La variable `driver` del método `setUp` tiene un alcance dentro de si misma, por lo que debemos asignarla nuevamente a una variable dentro del método `test_get_ptyhon_website` para poderla utilizar.
+De la misma forma todas las funciones de nuestro caso de prueba deben iniciar con la palabra `test` para ser reconocidas por Unittest
 
-#### 5. Sincronización de pruebas
-- Demora explícita (explicit await)
-- Demora implícita (implicit await)
+Terminamos llamando al método `tearDown` y nuestro método `main`:
+```
+def tearDown(self):
+  print('Browser is about to close...')
+  sleep(3)
+  self.driver.close()
+  
+if __name__ == '__main__':
+  unittest.main(verbosity = 2)
+```
 
-## Presentación
-Mi nombre es Héctor Vega, soy un apasionado a los videojuegos, las artes marciales y la cerverza artesanal. Aprendí a programar mientras trabajaba en Recursos humanos de TI, fue cuando descubrí Python y no tenía la menor idea de a donde me llevaría esto.
+Siempre es buena idea comunicar a través de algún medio que estás terminando la prueba, tomar una pausa y después cerrar la instancia del navegador para evitar exceso en el uso de recursos de tu equipo. 
+Por otro lado la bandera `verbosity` con el parámetro `2` nos otorgará más detalles en el reporte de Unittest.
 
-## ¿Qué es Selenium?
-Selenium es un framework open source de automatización para el navegador web, compatible con diversos lenguajes de programación:
-- Java
-- C# 
-- PHP
-- Perl
-- Ruby
-- Python
+### Caso de prueba listo
+Hasta este punto tu código debe de verse así:
+```
+from selenium import webdriver
+from time import sleep
 
-La suite de Selenium consta de 4 herramientas diferentes:
-- Selenium Integrated Development Environment (IDE)
-- Selenium Remote Control (RC), actualmente en desuso
-- WebDriver
-- Selenium Grid
+class UsingUnnittest(unittest.Testcase):
 
-Durante su evolución el proyecto Selenium Remote Control se fusionó al de WebDriver.
-A partir de este momento nos referiremos a Selenium WebDriver cómo "Selenium".
+    def setUp(self):
+        self.driver = webdriver.Opera(executable_path = "./operadriver")
+        driver = self.driver
+        
+    def test_get_ptyhon_website(self):
+        driver = self.driver
+        driver.get("https://www.python.org")
+        
+    def tearDown(self):
+        print('Browser is about to close...')
+        sleep(3)
+        self.driver.close()
+  
+if __name__ == '__main__':
+  unittest.main(verbosity = 2)
+```
 
-## Ventajas y Desventajas
-### Ventajas
-- Fácil instalación
-- Comunicación directa con el navegador
-- Interacción realista y precisa con el navegador
-- No necesita de componentes externos
-- Compatible con diversos navegadores
-- Posee una comunidad robusta
-- Cuenta con estándares de buenas prácticas
+### PyUnitReport
+Este es un test runner, el cual se encargará de analizar nuestra clase y casos de prueba para ensamblarlos en un reporte escrito en HTML. Este mostrará los resultados con datos relevantes cómo fecha en que se generó, tiempo de ejecución, status de los casos de prueba, códigos de colores para su fácil identificación y también detalles de los mismos.
 
-### Desventajas
-- Requiere de cierto conocimiento en programación
-- No soporta nuevos navegadores tan rápido
-- No posee algún mecanismo de reportes
-- Debe generar una nueva instancia de navegador en cada uso
-- Es lento comparado con otros frameworks de testing
-- La mayoría de los recursos se limitan a Java
+### Implementando PyUnitReport
+Primero debemos importar el test runner con el comando `from pyunitreport import HTMLTestRunner`.
 
-A final de cuentas lo que buscamos con Selenium es imitar o automatizar las acciones de una persona en alguna aplicación web quedando a tu imaginación, lo que puede ir desde ahorrar tiempo en una tarea repetitiva hasta incluso realizar acciones maliciosas cómo una ataque de fuerza bruta.
+Podemos implementar PyUnitReport fácilmente si lo colocamos en el método `unittest.main()` utilizando la palabra reservada `testRunner` de la siguiente forma:
+`unittest.main(testRunner = HTMLTestRunner)`
+
+Cuentas con tres parámetros, donde el único obligatorio es `output`, para especificar el directorio donde se guardará el reporte. También puedes utilizar el parámetro `report_name` para dar un nombre a tu reporte, o por defecto colocará la fecha y hora en que se generó. Si quieres utilizar el modo "failfast" puedes hacerlo colocando el parámetro `failfast` con valor `True`
+
+La función main debe ser cómo esta entonces:
+`unittest.main(testRunner = HTMLTestRunner(output = 'Reports', report_name = 'python-website-report', failfast = True))`
+
+Si tu código es idéntico al siguiente entonces tendrás una carpeta llamada `Reports` con un archivo HTML de nombre `python-website-test` y toda la información de tu prueba hasta ahora:
+```
+from selenium import webdriver
+from time import sleep
+from pyunitreport import HTMLTestRunner
+
+class UsingUnnittest(unittest.Testcase):
+
+    def setUp(self):
+        self.driver = webdriver.Opera(executable_path = "./operadriver")
+        driver = self.driver
+        
+    def test_get_ptyhon_website(self):
+        driver = self.driver
+        driver.get("https://www.python.org")
+        
+    def tearDown(self):
+        print('Browser is about to close...')
+        sleep(3)
+        self.driver.close()
+  
+if __name__ == '__main__':
+  unittest.main(testRunner = HTMLTestRunner(output = 'Reports', report_name = 'python-website-report', failfast = True))
+```
+
+# Localizar elementos
+## Selectores
+Dentro de una interfaz gráfica en la web podemos ubicar los elementos de la misma respecto a sus selectores como:
+- ID
+- Nombre
+- Texto del link
+- Selector de CSS
+- Texto interior
+
+También podemos ubicar a los elementos como parte del DOM por:
+- ID del elemento
+- Nombre del elemento
+- XPath
+
+### XPath
+XPath es el lenguaje utilizado para identificar nodos en XML, extendiendo su uso a identificar elementos en HTML. Estos pueden ser absolutos o relativos.
+
+Hay una discusión entre si esta debería ser nuestra última opción para ubicar a los elementos, por ejemplo cuando no hay una forma explícita de identificarlos por medio de alguna de las opciones anteriores, o si debería ser la primera por cuestiones de seguridad ya que no está exponiendo algún dato de la aplicación web.
+
+Una forma rápida de obtenerlo es haciendo click en el elemento dentro del inspector de elementos y elegir copiar su XPath absoluto o relativo.
+
+## Encontrar elementos
+
+Al ver el botón "About" de https://www.python.org con el inspector de elementos vemos que tiene la siguiente estructura:
+`<a href="/about/" title="" class=" current_item selected selected">About</a>`
+
+Y su XPath es el siguiente:
+- Absoluto
+`/html/body/div/header/div/nav/ul/li[1]/a`
+- Relativo
+`//*[@id="about"]/a`
+
+Podemos apreciar el tipo de etiqueta HTML, sus atributos y valores de los atributos.
+
+La forma en que procedemos acceder a los elementos es con el método `find_element_by` y contamos con diversas opciones:
+- class_name
+- css_selector
+- id
+- link_text
+- name
+- partial_link_name
+- tag_name
+- xpath
+
+Este botón podemos seleccionarlo escribiendo `find_element_by_link_text("About")` y lo almacenaremos en la variable `about_link` en caso de que deseemos usarlo.
+
+Si queremos hacer click en el podemos usar el método `click()`
+
+Nuestro código ahora ser verá así:
+```
+from selenium import webdriver
+from time import sleep
+
+driver = webdriver.Opera(executable_path = "./operadriver")
+driver.get("https://www.python.org")
+
+about_link = driver.find_element_by_link_text("About")
+about_link.click()
+
+sleep(3)
+
+driver.close()
+```
