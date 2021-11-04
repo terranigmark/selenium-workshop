@@ -229,6 +229,29 @@ def test_get_ptyhon_website(self):
         driver.find_element(By.XPATH, '//*[@id="touchnav-wrapper"]/header/div/div[1]/a')
 ```
 
-¿Funcionó tu script? ¡Genial!
-Ya sabes ubicar elementos por sus distintos selectores, hacer click en ellos y recuerda que puedes almacenarlos en variables.
-En la próxima sección trabajaremos con un sitio diferente que está diseñado para automatizaciones donde interactuarás con sus distintos elementos.
+## Poniendo en práctica lo aprendido
+¿Funcionó tu script? ¡Genial! Ya sabes ubicar elementos por sus distintos selectores, hacer click en ellos y recuerda que puedes almacenarlos en variables.
+Tu siguiente reto será practicar con un sitio diseñado para automatizaciones, es MUY IMPORTANTE que siempre lo hagas en aplicaciones designadas para ello pues el hacer automatizaciones en producción trae sus consecuencias.
+
+### Madison Island, tu e-commerce de práctica
+[Madison Island](http://demo-store.seleniumacademy.com) es un sitio demo con el que puedes experimentar libremente, notarás que se trata de un e-commerce y tiene todos los elementos de uno real. Si por algún motivo no puedes acceder al sitio puedes probar con los siguientes que, aunque tengan distinta estructura, siguen siendo e-commerces:
+- [Madison Island, sitio alternativo 1](http://magento-demo.lexiconn.com)
+- [Madison Island, sitio alternativo 2](http://ecommerce-solution.info)
+- [Madison Island, sitio alternativo 3](http://demo.onestepcheckout.com)
+- [MyStore](http://automationpractice.com/index.php)
+- [Swag Labs](https://www.saucedemo.com)
+
+¡Recuerda que cuando ingreses información procura que sea información falsa/dummy y no datos verdaderos!
+
+### El reto
+Crea un script de pruebas donde tengas los métodos `setUp` y `tearDown`que ya hemos utilizado pero además los siguientes:
+- `test_search_text_field' que ubique el campo de búsqueda a través de su id.
+- `test_search_text_field_by_name' que ubique el campo de búsqueda a través de su atributo `name`.
+- `test_search_text_field_by_class_name' que ubique el campo de búsqueda a través de su nombre de clase.
+- `test_search_text_field_button' que ubique el botón de la barra de búsqueda con forma de 🔍 por su nombre clase.
+- `test_count_promo_banners` que ubique el elemento que contiene los 3 cuadros de promociones ("Home & Decor", "Shop Private Sales" y "Travel Gear") por su nombre de clase. Después ubica las 3 imágenes que representa cada banner en solo localizador, deberás utilizar `find_elements` (en plural).
+- `test_vip_promo`que ubique una de las imágenes del carrusel por su XPath.
+- `test_shopping_cart_icon` que ubique el ícono del carrito de compras por su selector de CSS.
+
+¿Cómo te fue? En los archivos de esta rama encontrarás una propuesta de solución, si lo hiciste de una forma diferente también está bien.
+En la siguiente sección prepararás assertions y una test suite.
