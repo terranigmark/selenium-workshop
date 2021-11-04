@@ -4,6 +4,7 @@ from pyunitreport import HTMLTestRunner
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 
 
 class UsingUnnittest(unittest.TestCase):
@@ -15,7 +16,13 @@ class UsingUnnittest(unittest.TestCase):
     def test_get_ptyhon_website(self):
         driver = self.driver
         driver.get('https://www.python.org')
-        driver.find_element_by_link_text('About').click()
+        driver.find_element(By.CLASS_NAME, 'tier-1')
+        driver.find_element(By.CSS_SELECTOR, '#community')
+        driver.find_element(By.ID, 'downloads')
+        driver.find_element(By.LINK_TEXT, 'About')
+        driver.find_element(By.NAME, 'q')
+        driver.find_element(By.TAG_NAME, 'h1')
+        driver.find_element(By.XPATH, '//*[@id="touchnav-wrapper"]/header/div/div[1]/a')
 
     def tearDown(self):
         print('Browser is about to close...')
