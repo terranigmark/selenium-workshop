@@ -46,12 +46,12 @@ PyUnitReport es un test runner de pruebas unitarias que genera reportes en HTML.
 ### Descarga de browser drivers
 Cada uno de los navegadores compatibles con Selenium tiene su propio driver que le permite comunicarse con el navegador y debemos descargar el correspondiente según el navegador que utilicemos.
 Esta es una lista que redirige a sus sitios de descarga:
-- [Chrome](https://sites.google.com/a/chromium.org/chromedriver/) - La documentación de Chrome incluye la descarga correspondiente.
-- [Firefox](https://github.com/mozilla/geckodriver/releases/tag/v0.26.0) - Se ubican al final de la página.
-- [Internet Explorer](https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver#required-configuration) - Se puede descargar del vínculo con nombre  `Downloads` y seguir las instrucciones de configuración.
-- [Safari](https://developer.apple.com/documentation/webkit/about_webdriver_for_safari) - La página indica las instrucciones para utilizar WebDriver.
+- [Chrome](https://sites.google.com/chromium.org/driver/) - La documentación de Chrome incluye la descarga correspondiente.
+- [Firefox](https://github.com/mozilla/geckodriver/releases) - Se ubican al final de la página.
+- [Internet Explorer](https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver) - Se puede descargar del vínculo con nombre  `Downloads` y seguir las instrucciones de configuración.
+- [Safari](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari) - La página indica las instrucciones para utilizar WebDriver.
 - [Opera](https://github.com/operasoftware/operachromiumdriver/releases) - La documentación de Opera incluye la descarga correspondiente.
-- [Edge](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) - La documentación de Chrome incluye la descarga correspondiente.
+- [Edge](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver) - La documentación de Chrome incluye la descarga correspondiente.
 
 ## "Hola, mundo!" en Selenium
 Estamos listos para hacer nuestra primer prueba con Selenium y validar que funciona correctamente.
@@ -63,13 +63,13 @@ Para ello debemos colocar el siguiente código en nuestro editor de texto prefer
 
 ```
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
 s = Service('./chromedriver')
-driver = webdriver.Chrome(service = s, options=chromeOptions)
-driver = webdriver.Opera(executable_path = "./operadriver")
+driver = webdriver.Chrome(service = s)
 driver.get("https://www.python.org")
 
-driver.close()
+driver.quit()
 ```
 
 Seguro notaste como se abrio una ventana de navegador, cargó el sitio web que le indicamos y se cerró una vez cumplida esta tarea. Esto es porque Selenium tratará de ejecutar las instrucciones asignadas una a una tan rápido como nuestra computadora y conexión a internet lo logre.
@@ -78,14 +78,14 @@ Podemos utilizar la librería `time`para colocar pausas explícitas, procurando 
 
 ```
 from selenium import webdriver
-from time import sleep
+from selenium.webdriver.chrome.service import Service
 
-driver = webdriver.Opera(executable_path = "./operadriver")
+s = Service('./chromedriver')
+driver = webdriver.Chrome(service = s)
 driver.get("https://www.python.org")
-
 sleep(3)
 
-driver.close()
+driver.quit()
 ```
 
 El módulo `sleep` de la librería `time`incluirá estas pausas indicando cuantos segundos durará.
