@@ -164,7 +164,7 @@ Y su XPath es el siguiente:
 
 Podemos apreciar el tipo de etiqueta HTML, sus atributos y valores de los atributos.
 
-La forma en que procedemos acceder a los elementos es con el método `find_element_by` y contamos con diversas opciones:
+La forma en que procedemos acceder a los elementos es con el método `find_element(By.SELECTOR)` y contamos con distintas opciones:
 - class_name
 - css_selector
 - id
@@ -174,7 +174,7 @@ La forma en que procedemos acceder a los elementos es con el método `find_eleme
 - tag_name
 - xpath
 
-Este botón podemos seleccionarlo escribiendo `find_element_by_link_text("About")` y lo almacenaremos en la variable `about_link` en caso de que deseemos usarlo.
+Este botón podemos seleccionarlo escribiendo `find_element(By.LINK_TEXT, "About")` y lo almacenaremos en la variable `about_link` en caso de que deseemos usarlo.
 
 Si queremos hacer click en el podemos usar el método `click()`
 
@@ -197,7 +197,8 @@ class UsingUnnittest(unittest.TestCase):
     def test_get_ptyhon_website(self):
         driver = self.driver
         driver.get('https://www.python.org')
-        driver.find_element_by_link_text('About').click()
+        button_about = driver.find_element(By.LINK_TEXT, 'About')
+        button_about.click()
 
     def tearDown(self):
         print('Browser is about to close...')
@@ -213,3 +214,21 @@ if __name__ == '__main__':
             report_name = 'python_org_report',
             failfast = True))
 ```
+### Probando más selectores
+Ahora ubiquemos más elemenos del home utilizando otros selectores de manera que tu método `test_get_python()` debe quedar así:
+```
+def test_get_ptyhon_website(self):
+        driver = self.driver
+        driver.get('https://www.python.org')
+        driver.find_element(By.CLASS_NAME, 'tier-1')
+        driver.find_element(By.CSS_SELECTOR, '#community')
+        driver.find_element(By.ID, 'downloads')
+        driver.find_element(By.LINK_TEXT, 'About')
+        driver.find_element(By.NAME, 'q')
+        driver.find_element(By.TAG_NAME, 'h1')
+        driver.find_element(By.XPATH, '//*[@id="touchnav-wrapper"]/header/div/div[1]/a')
+```
+
+¿Funcionó tu script? ¡Genial!
+Ya sabes ubicar elementos por sus distintos selectores, hacer click en ellos y recuerda que puedes almacenarlos en variables.
+En la próxima sección trabajaremos con un sitio diferente que está diseñado para automatizaciones donde interactuarás con sus distintos elementos.
