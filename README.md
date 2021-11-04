@@ -21,6 +21,15 @@ En caso contrario debemos seguir los siguientes pasos:
 2. Ejecutamos el archivo de instalación, dejando las selecciones por defecto y continuado con los pasos de instalación.
 3. Validamos si Python está instalado.
 
+### Creando nuestro entorno virtual
+Además de Python nos apoyaremos de algunos módulos externos, así que vale la pena crear un entorno virtual para tener todo organizado con `venv`.
+Para crearlo ejecutaremos el comando correspondiente:
+`python3 -m venv myenv`.
+Donde `myenv` es el nombre de nuestro entorno virtual, tú puedes darle otro nombre si así lo deseas.
+
+Para activar nuestro entorno lo hacemos con el comando `source myenv/bin/activate` y así realizar las instalaciones siguientes.
+Recuerda que para salir del entorno virtual lo puedes hacer con el comando `deactivate`.
+
 ### Instalación de Selenium
 1. Abrimos nuestra terminal.
 2. Ejecutamos el comando `pip install selenium`.
