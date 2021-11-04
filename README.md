@@ -1,86 +1,82 @@
-![](https://img.shields.io/badge/Python-v3.7-yellow) ![](https://img.shields.io/badge/Selenium-WebDriver-brightgreen) ![](https://img.shields.io/badge/PyUnitReport-Unit%20Testing-brightgreen)
+## 2. Instalación y Descargas
+### Instalación de Python
+#### Windows
+1. Dirigirse a la [sección de descargas en el sitio oficial de Python](https://www.python.org/downloads/)
+2. Descargar la versión 3.9 de Python o superior.
+3. Abrir el ejecutable de instalación.
+4. En la primer pantalla marcar la opción "Add Python 3.x to PATH.
+5. Elegir "Install now".
+6. Marcar todas las casillas en la opción "Optional features".
+7. Abrimos el cmd de windows, escribimos `python`y presionamos la tecla `ENTER`
+8. En caso de mostrarse el intérprete de Python, entonces estamos listos para continuar 🎉
 
-# Selenium Workshop (Work In Progress)
-Este repositorio se mantiene en constante actualizacion y es utilizado como tutorial para iniciarse en el uso de Selenium con Python.
+#### Linux y Mac OS
+Python suele estar instalado en estos sistemas operativos y podemos validarlo de la siguiente forma:
+1. Abrimos la terminal de comandos.
+2. Escribimos `python3 --version` y presionamos la tecla ´ENTER´
+3. Si obtenemos como respuesta un mensaje cómo `Python 3.9.x` tenemos Python 3 instalado. Recuerda que trabajaremos con una versión igual o superior a Python 3.9.0.
 
-## ¿Cómo puedo utilizar este repositorio?
-En la rama por default se ubica este README.md con la información general del repositorio. Navegando entre las distintas ramas y el orden numerado podrás encontrar los contenidos del tutorial como los archivos generados. Es recomendable que sigas las instrucciones en el orden de cada una.
+En caso contrario debemos seguir los siguientes pasos:
+1. Dirigirse a la [sección de descargas en el sitio oficial de Python](https://www.python.org/downloads/)
+2. Ejecutamos el archivo de instalación, dejando las selecciones por defecto y continuado con los pasos de instalación.
+3. Validamos si Python está instalado.
 
-## Requisitos
-Cualquiera de los siguientes navegadores instalados:
-- Firefox
-- Safari
-- Opera
-- Chrome
-- Edge
+### Instalación de Selenium
+1. Abrimos nuestra terminal.
+2. Ejecutamos el comando `pip install selenium`.
+3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
+4. Verificamos su instalación con el comando `pip freeze`.
 
-## Descripción
-Selenium es un conjunto de herramientas que nos permite automatizar acciones en nuestro navegador, dando pie a crear scripts que ayuden a realizar un proceso específico en forma automática o hacer pruebas en el frontend de un sitio web. Actualmente Selenium puede ser utilizado con distintos lenguajes, sin embargo la mayor parte de la documentación se encuentra hecha para Java y mi deseo es que otras personas que gustan del lenguaje Python comiencen a utilizarlo también PyUnitReport cómo librería para generar reportes de pruebas en formato HTML.
+### Instalación de PyUnitReport
+PyUnitReport es un test runner de pruebas unitarias que genera reportes en HTML. Esto lo hace más fácil de compartir y visualizar para que otras personas puedan analizar nuestros reportes de pruebas.
+1. Abrimos nuestra terminal.
+2. Ejecutamos el comando `pip install PyUnitReport`.
+3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
+4. Verificamos su instalación con el comando `pip freeze`.
 
-### Agenda
-Durante este taller abordaremos los siguientes temas:
-#### 1. Para iniciar
-- Presentación
-- ¿Qué es Selenium?
-- Ventajas y desventajas de Selenium
+### Descarga de browser drivers
+Cada uno de los navegadores compatibles con Selenium tiene su propio driver que le permite comunicarse con el navegador y debemos descargar el correspondiente según el navegador que utilicemos.
+Esta es una lista que redirige a sus sitios de descarga:
+- [Chrome](https://sites.google.com/a/chromium.org/chromedriver/) - La documentación de Chrome incluye la descarga correspondiente.
+- [Firefox](https://github.com/mozilla/geckodriver/releases/tag/v0.26.0) - Se ubican al final de la página.
+- [Internet Explorer](https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver#required-configuration) - Se puede descargar del vínculo con nombre  `Downloads` y seguir las instrucciones de configuración.
+- [Safari](https://developer.apple.com/documentation/webkit/about_webdriver_for_safari) - La página indica las instrucciones para utilizar WebDriver.
+- [Opera](https://github.com/operasoftware/operachromiumdriver/releases) - La documentación de Opera incluye la descarga correspondiente.
+- [Edge](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) - La documentación de Chrome incluye la descarga correspondiente.
 
-#### 2. Preparación del entorno de trabajo
-- Instalación y Descargas
-- "Hola, mundo!" en Selenium
+## "Hola, mundo!" en Selenium
+Estamos listos para hacer nuestra primer prueba con Selenium y validar que funciona correctamente.
+Para ello debemos colocar el siguiente código en nuestro editor de texto preferido si estamos utilizando Google Chrome.
 
-#### 3. Comandos básicos
-- Unittest
-- Selectores
-- Localizar elementos
+**NOTA:**
+- Si estás utilizando un navegador distinto deberás cambiar el nombre del mismo después de `webdriver.Chrome`
+- La ruta entre comillas de `excecutable_path =`indica la ruta donde se encuentra el driver de tu navegador. Tenerlo en la misma carpeta que tu script es buena ieda.
 
-#### 4. Interactual con elementos
-- TextBox, Submit Button, SendKeys() y click()
-- CheckBox, Form, RadioButton
-- Dropdown
-- Alert y Pop-Up
-- Navegación en la ventana
+```
+from selenium import webdriver
 
-#### 5. Sincronización de pruebas
-- Demora explícita (explicit await)
-- Demora implícita (implicit await)
+s = Service('./chromedriver')
+driver = webdriver.Chrome(service = s, options=chromeOptions)
+driver = webdriver.Opera(executable_path = "./operadriver")
+driver.get("https://www.python.org")
 
-## Presentación
-Mi nombre es Héctor Vega, soy un apasionado a los videojuegos, las artes marciales y la cerverza artesanal. Aprendí a programar mientras trabajaba en Recursos humanos de TI, fue cuando descubrí Python y no tenía la menor idea de a donde me llevaría esto.
+driver.close()
+```
 
-## ¿Qué es Selenium?
-Selenium es un framework open source de automatización para el navegador web, compatible con diversos lenguajes de programación:
-- Java
-- C# 
-- PHP
-- Perl
-- Ruby
-- Python
+Seguro notaste como se abrio una ventana de navegador, cargó el sitio web que le indicamos y se cerró una vez cumplida esta tarea. Esto es porque Selenium tratará de ejecutar las instrucciones asignadas una a una tan rápido como nuestra computadora y conexión a internet lo logre.
 
-La suite de Selenium consta de 4 herramientas diferentes:
-- Selenium Integrated Development Environment (IDE)
-- Selenium Remote Control (RC), actualmente en desuso
-- WebDriver
-- Selenium Grid
+Podemos utilizar la librería `time`para colocar pausas explícitas, procurando no abusar de las mismas ya que esto haría nuestra tarea más lenta.
 
-Durante su evolución el proyecto Selenium Remote Control se fusionó al de WebDriver.
-A partir de este momento nos referiremos a Selenium WebDriver cómo "Selenium".
+```
+from selenium import webdriver
+from time import sleep
 
-## Ventajas y Desventajas
-### Ventajas
-- Fácil instalación
-- Comunicación directa con el navegador
-- Interacción realista y precisa con el navegador
-- No necesita de componentes externos
-- Compatible con diversos navegadores
-- Posee una comunidad robusta
-- Cuenta con estándares de buenas prácticas
+driver = webdriver.Opera(executable_path = "./operadriver")
+driver.get("https://www.python.org")
 
-### Desventajas
-- Requiere de cierto conocimiento en programación
-- No soporta nuevos navegadores tan rápido
-- No posee algún mecanismo de reportes
-- Debe generar una nueva instancia de navegador en cada uso
-- Es lento comparado con otros frameworks de testing
-- La mayoría de los recursos se limitan a Java
+sleep(3)
 
-A final de cuentas lo que buscamos con Selenium es imitar o automatizar las acciones de una persona en alguna aplicación web quedando a tu imaginación, lo que puede ir desde ahorrar tiempo en una tarea repetitiva hasta incluso realizar acciones maliciosas cómo una ataque de fuerza bruta.
+driver.close()
+```
+
+El módulo `sleep` de la librería `time`incluirá estas pausas indicando cuantos segundos durará.
