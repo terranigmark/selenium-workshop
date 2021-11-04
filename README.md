@@ -253,5 +253,24 @@ Crea un script de pruebas donde tengas los métodos `setUp` y `tearDown`que ya h
 - `test_vip_promo`que ubique una de las imágenes del carrusel por su XPath.
 - `test_shopping_cart_icon` que ubique el ícono del carrito de compras por su selector de CSS.
 
-¿Cómo te fue? En los archivos de esta rama encontrarás una propuesta de solución, si lo hiciste de una forma diferente también está bien.
+¿Cómo te fue? En los archivos de esta rama encontrarás una propuesta de solución (`madison_island.py`), si lo hiciste de una forma diferente también está bien.
+
+Al final en la terminal debiste tener una salida similar a esta:
+```
+Running tests... 
+----------------------------------------------------------------------
+ test_count_of_promo_banner_images (__main__.UsingUnnittest) ... OK (7.809538)s
+ test_search_button_enabled (__main__.UsingUnnittest) ... OK (6.800608)s
+ test_search_text_field (__main__.UsingUnnittest) ... OK (5.762583)s
+ test_search_text_field_by_name (__main__.UsingUnnittest) ... OK (9.526460)s
+ test_search_text_field_class_name (__main__.UsingUnnittest) ... OK (6.087199)s
+ test_shopping_cart (__main__.UsingUnnittest) ... OK (7.216527)s
+ test_vip_promo (__main__.UsingUnnittest) ... OK (7.414768)s
+
+----------------------------------------------------------------------
+Ran 7 tests in 51.071s
+
+OK
+```
+
 En la siguiente sección prepararás assertions y una test suite.
