@@ -1,4 +1,12 @@
 ## 2. Instalación y Descargas
+Para trabajar cómodamente con Selenium y Python realizaremos las siguientes instalaciones:
+- Python cómo lenguaje de programación en una versión igual o superior a 3.9.
+- Selenium 4.0 para automatizar nuestro navegador.
+- PyUnitReport cómo generador de reportes en formato HTML.
+- ipdb que nos permite hacer debugging e interactuar con nuestra aplicación web en tiempo real.
+- Faker para generar datos falsos que pudiéramos ingreasr a una aplicación.
+- Browser WebDrivers que enviarán nuestras instrucciones al navegador.
+
 ### Instalación de Python
 #### Windows
 1. Dirigirse a la [sección de descargas en el sitio oficial de Python](https://www.python.org/downloads/)
@@ -40,6 +48,20 @@ Recuerda que para salir del entorno virtual lo puedes hacer con el comando `deac
 PyUnitReport es un test runner de pruebas unitarias que genera reportes en HTML. Esto lo hace más fácil de compartir y visualizar para que otras personas puedan analizar nuestros reportes de pruebas.
 1. Abrimos nuestra terminal.
 2. Ejecutamos el comando `pip install PyUnitReport`.
+3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
+4. Verificamos su instalación con el comando `pip freeze`.
+
+### Instalación de ipdb
+Esta herramienta exporta funciones para acceder al debugger de IPython permitiendo utilizarlo directamente en nuestro proyecto. Su gran utilidad es la de incluir breakpoints cuando algo falla sin saber su causa y experimentar en ese mismo momento con futuras posibilidades. Dicho de otra forma, pausa la ejecución de nuestra automatización para que interactuemos de manera "manual".
+1. Abrimos nuestra terminal.
+2. Ejecutamos el comando `pip install idpb`.
+3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
+4. Verificamos su instalación con el comando `pip freeze`.
+
+### Instalación de Faker
+Este paquete genera datos falsos por nosotros ya sea para bases de datos, documentos o pruebas. Cuenta con proveedores de datos diverses cómo: domicilios, datos personales (nombres, apellido, edad, identificación, etc.), fechas, géneros musicales y muchos más. Además cuenta con la posibilidad de localizar los datos a algún país en específico.
+1. Abrimos nuestra terminal.
+2. Ejecutamos el comando `pip install Faker` (con mayúscula inicial).
 3. Esto comenzará la instalación del paquete y nos indicará cuando haya finalizado.
 4. Verificamos su instalación con el comando `pip freeze`.
 
