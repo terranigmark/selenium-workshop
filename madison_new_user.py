@@ -26,23 +26,39 @@ class UsingUnnittest(unittest.TestCase):
         account_link.click()
         login_link = driver.find_element(By.LINK_TEXT, 'Log In')
         login_link.click()
+        
         create_account_button = driver.find_element(By.LINK_TEXT, 'CREATE AN ACCOUNT')
+        self.assertTrue(create_account_button.is_displayed()) and create_account_button.is_enabled())
         create_account_button.click()
+        
+
+        
         import ipdb; ipdb.set_trace()
         first_name = driver.find_element(By.ID, 'firstname')
-        first_name.send_keys(fake.first_name_female())
         middle_name = driver.find_element(By.ID, 'middlename')
-        middle_name.send_keys(fake.first_name_female())
         last_name = driver.find_element(By.ID, 'lastname')
-        last_name.send_keys(fake.last_name_female())
         email_address = driver.find_element(By.ID, 'email_address')
-        email_address.send_keys(fake.ascii_safe_email())
         password = driver.find_element(By.ID, 'password')
-        password.send_keys('password')
         confirm_password = driver.find_element(By.ID, 'confirmation')
-        confirm_password.send_keys('password')
         newsletter = driver.find_element(By.ID, 'is_subscribed')
+        
+        self.assertTrue(first_name.is_enabled()
+        and middle_name.is_enabled()
+        and last_name.is_enabled()
+        and email_address.is_enabled()
+        and news_letter_subscription.is_enabled()
+        and password.is_enabled()
+        and confirm_password.is_enabled()
+        and submit_button.is_enabled())
+        
+        first_name.send_keys(fake.first_name_female())
+        middle_name.send_keys(fake.first_name_female())
+        last_name.send_keys(fake.last_name_female())
+        email_address.send_keys(fake.ascii_safe_email())
+        password.send_keys('password')
+        confirm_password.send_keys('password')
         newsletter.click()
+        
         submit_button = driver.find_element(By.XPATH, '//*[@id="form-validate"]/div[2]/button')
         submit_button.click()
 
