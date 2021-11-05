@@ -16,9 +16,21 @@ class UsingUnnittest(unittest.TestCase):
 
     def test_select_language(self):
         driver = self.driver
+
+        expected_options = ['English', 'French', 'German']
+        actual_options = []
+
+        for option in select_language.options:
+            actual_options.append(option.text)
+
+        self.assertListEqual(exp_options, act_options)
+        self.assertEqual('English', select_language.first_selected_option.text)
+        
         language_selector = Select(driver.find_element(By.ID, 'select-language'))
         language_selector.select_by_visible_text('German')
+        self.assertTrue('store=german' in self.driver.current_url)
         sleep(1)
+        
         language_selector = Select(driver.find_element(By.ID, 'select-language'))
         language_selector.select_by_index(1)
         sleep(1)
