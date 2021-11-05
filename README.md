@@ -30,6 +30,7 @@ Durante este taller abordaremos los siguientes temas:
 
 #### 3. Comandos básicos
 - Unittest
+- Assertions
 - Selectores
 - Localizar elementos
 
