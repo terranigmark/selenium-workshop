@@ -16,15 +16,18 @@ class UsingUnnittest(unittest.TestCase):
 
     def test_compare_products_removal(self):
         driver = self.driver
+        
         search_field = driver.find_element_by_name('q')
         search_field.clear()
         search_field.send_keys('tee')
         search_field.submit()
         sleep(2)
+        
         driver.find_element(By.CLASS_NAME, 'link-compare').click()
         driver.find_element(By.LINK_TEXT, 'Clear All').click()
         alert = driver.switch_to.alert()
         alert.accept()
+        self.assertEqual('Are you sure you would like to remove all products from your comparison?', alert_text)
 
     def tearDown(self):
         print('Browser is about to close...')
