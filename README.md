@@ -1,69 +1,60 @@
-# 3. Comandos Básicos
-## Unit Testing
-Realizar pruebas unitaras en tus automatizaciones es una gran ayuda, ya que de esta forma puedes saber que está 
-ocurriendo en cada paso (caso de prueba/test case), obtener un resultado de cada una y tomar decisiones al respecto.
+# 4. Interactúa con elementos
+En las aplicaciones y sitios web podrás encontrar muchos elementos de diversos tipos, algunos están a la vista y otros no tanto, sin embargo lo importante es que ya sabes localizarlos. Ahora que sabemos cómo identificar elementos y seleccionarlos podemos interactuar con ellos.
 
-En esta ocasión te apoyarás de Unittest y PyUnitReport.
+Algunos elementos con los que vas a interactuar son:
+- Form (text area, text field e input)
+- Checkbox
+- Radio button
 
-### Unittest
-Unittest, también conocido cómo PyUnit, es un módulo de testing para pruebas unitarias inspirado en JUnit y es común encontrar este tipo de frameworks en otros lenguajes donde comparten características similares. Este es un gran complemento, considerando que Selenium no brinda información adicional sobre lo que hacemos.
+## Hacer click
+Recordarás que en nuestro "Hola, Mundo!" hicimos click a algunos botones, sabes que el método es bastante sencillo: `click().
+Ahora inténtalo con el carrito de compras de Madison Island, no olvides que primero debes localizar el elemento y después enviar la interacción.
+Tu código deberá quedar algo así:
 
-Con Unittest podemos crear pruebas que se componen las siguientes partes:
-- Método `setUp`: Definimos instrucciones que se realizarán antes de nuestras pruebas. Aquí es donde prepararemos nuestro entorno, generalmente configurar y crear la instancia de nuestro navegador "limpia".
-- Métodos de prueba: Será la parte del código que evualará Unittest, debemos definirla cómo métodos, llevarán el prefijo `test` y dentro de esta las acciones que queremos evaluar. Por ejemplo `def test_sending_text(self):`
-- Método `tearDown`: Definimos instrucciones que se realizarán después de nuestras pruebas. Cómo puede ser un mensaje para comunicar que hemos terminado con las pruebas y cerrar la instancia del navegador.
-- `unittest.main()` - Esta es una interfaz de de línea de comandos que nos mostrará detalles cómo la cantidad de tests ejecutados y el tiempo de evaluación. Se coloca al final de nuestro código cómo si llamáramos al método `main`.
-
-Al final lizar las pruebas obtenemos un reporte de resultados.
-Los resultados de las pruebas pueden ser tres distintos:
-- **OK** - La prueba terminó de forma satisfactoria.
-- **FAIL** - La prueba no terminó de forma satisfactoria, se levantará la excepción que hayamos asignado.
-- **ERROR** - La prueba no terminó exitosamente y está fuera de nuestras excepciones.
-
-#### Implementando Unittest
-Llamaremos a Unittest por medio de una clase en la cual colocaremos la subclase `unittest.TestCase`.
-Suponiendo que nuestra clase de prueba se llame `UsingUnittest` quedaría así: `class UsingUnittest(unittest.TestCase):`.
-
-Ahora definiremos nuestro `método setUp` con el ejemplo que hemos trabajado:
 ```
-def setUp(self):
-    s = Service('./chromedriver')
-    self.driver = webdriver.Chrome(service = s)
+shopping_cart_icon = self.driver.find_element(By.CSS_SELECTOR, "div.header-minicart span.icon")
+shopping_cart_icon.click()
 ```
 
-Continuamos con nuestro método de prueba donde evaluaremos la apertura del sitio web:
-```
-def test_get_ptyhon_website(self):
-    driver = self.driver
-    driver.get("https://www.python.org")
-```
+Esta interacción funciona para enlaces, botones, text fields, dropdowns y todo aquello en lo que haríamos click.
 
-**NOTA:**
-La variable `driver` del método `setUp` tiene un alcance dentro de si misma, por lo que debemos asignarla nuevamente a una variable dentro del método `test_get_ptyhon_website` para poderla utilizar.
-De la misma forma todas las funciones de nuestro caso de prueba deben iniciar con la palabra `test` para ser reconocidas por Unittest
+## Inputs
+¿Qué hacer si quiero hacer una búsqueda en Madison Island?
+La respuesta lógica es colocar un texto en la barra buscadora para encontrar lo que queremos.
 
-Terminamos llamando al método `tearDown` y nuestro método `main`:
-```
-def tearDown(self):
-  print('Browser is about to close...')
-  sleep(3)
-  self.driver.quit()
-  
-if __name__ == '__main__':
-  unittest.main(verbosity = 2)
-```
+Esto es correcto, así que identificaremos ese campo, lo limpiaremos (borrar cualquier contenido que pudiera haber), para después colocar un texto e iniciar la búsqueda.
 
-Siempre es buena idea comunicar a través de algún medio que estás terminando la prueba, tomar una pausa y después cerrar la instancia del navegador para evitar exceso en el uso de recursos de tu equipo. 
-Por otro lado la bandera `verbosity` con el parámetro `2` nos otorgará más detalles en el reporte de Unittest.
+Inspeccionando el elemento encontramos sus atributos y valores:
+`<input id="id-search-field" name="q" type="search" role="textbox" class="search-field" placeholder="Search" value="" tabindex="1">`
 
-#### Caso de prueba listo
-Hasta este punto tu código debe de verse así:
+Usaremos su `id` para ubicarlo:
+`search_bar = driver.find_elements_by_id("id-search-field")`
+
+En caso de que haya algún texto en el TextBox podemos borrarlo con el método `clear()`
+`search_bar.clear()`
+
+## Enviar texto
+Para ingresar texto a un Textbox debemos importar un módulo específico para ello:
+`from selenium.webdriver.common.keys import Keys`
+
+El método para enviar texto es `send_keys()` sobre un elemento en el que nos ubiquemos:
+`search_bar.send_keys("salt shaker")`
+
+También podemos "presionar" cualquier tecla con el método `send_keys(Keys.TECLA)`.
+Solo debemos reemplazar la palabra `TECLA` por otra.
+Por ejemplo `send_keys(Keys.ARROW_DOWN)`.
+
+El código de nuestro método debe verse así más o menos:
+
 ```
 import unittest
 from time import sleep
+from pyunitreport import HTMLTestRunner
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 
 class UsingUnnittest(unittest.TestCase):
@@ -71,206 +62,177 @@ class UsingUnnittest(unittest.TestCase):
     def setUp(self):
         s = Service('./chromedriver')
         self.driver = webdriver.Chrome(service = s)
-
-    def test_get_ptyhon_website(self):
         driver = self.driver
-        driver.get("https://www.python.org")
+        driver.get('http://demo-store.seleniumacademy.com')
+        driver.implicitly_wait(10)
 
-    def tearDown(self):
-        print('Browser is about to close...')
-        sleep(3)
-        self.driver.quit()
+    def test_click_shopping_cart(self):
+        driver = self.driver
+        shopping_cart_icon = self.driver.find_element(By.CSS_SELECTOR, "div.header-minicart span.icon")
+        shopping_cart_icon.click()
+        sleep(2)
+
+    def test_search_salt_shaker(self):
+        driver = self.driver
+        search_field = driver.find_element(By.NAME, "q")
+        search_field.clear()
+        search_field.send_keys("salt_shaker")
+        search_field.send_keys(Keys.RETURN)
+        sleep(2)
 
 
 if __name__ == '__main__':
     unittest.main(verbosity = 2)
 ```
 
-### PyUnitReport
-Este es un test runner, el cual se encargará de analizar nuestra clase y casos de prueba para ensamblarlos en un reporte escrito en HTML. Mostrará los resultados con datos relevantes cómo fecha en que se generó, tiempo de ejecución, status de los casos de prueba, códigos de colores para su fácil identificación y también detalles de los mismos.
+## Llenando un formulario de registro de cuenta
+Ok, las últimas interacciones que aprendiste te permitirán aplicarlas a un sin número de casos así que vamos a ponernos un poco más serios y automatizaremos la creación de una cuenta en el e-commerce, pues esto es algo que hacen los usuarios ¿cierto?
 
-#### Implementando PyUnitReport
-Primero debemos importar el test runner con el comando `from pyunitreport import HTMLTestRunner`.
+Prepara un nuevo archivo de pruebas, crea tus métodos ya conocidos más uno nuevo de prueba que llamaremos `test_new_user()` y las acciones a realizar son las siguientes:
+1. Localizar el botón "ACCOUNT" y darle click.
+2. Se abrirá menú desplegable donde haremos click al enlace que dice "Log In".
+3. Verás una pantalla donde podemos iniciar sesión o crear una cuenta nueva. Haz click en el botón que dice "CREATE AN ACCOUNT".
+4. Nos llevará a un formulario que pedirá algunos datos para crear una cuenta los cuales solo es cuestión de localizarlos y enviar texto.
+5. ¿Ves ese checkbox para suscribirse al newsletter? También le daremos click. Inspecciona el elemento, indagando verás que hay una etiqueta `input` de tipo `checkbox` a la cual hay que hacer click.
+6. Por último haremos click en el botón que dice "Register".
 
-Podemos implementar PyUnitReport fácilmente si lo colocamos en el método `unittest.main()` utilizando la palabra reservada `testRunner` de la siguiente forma:
-`unittest.main(testRunner = HTMLTestRunner)`
+Utiliza los locators que desees mientras hayas logrado el objetivo: crear una cuenta nueva. El archivo `madison_new_user.py` te dará una idea de cómo puedes hacerlo.
 
-Cuentas con tres parámetros, donde el único obligatorio es `output`, para especificar el directorio donde se guardará el reporte. También puedes utilizar el parámetro `report_name` para dar un nombre a tu reporte, o por defecto colocará la fecha y hora en que se generó. Si quieres utilizar el modo "failfast" puedes hacerlo colocando el parámetro `failfast` con valor `True`
+¿Lo lograste? ¡Felicidades! Ahora podrás crear un ejercito de bots, pero eres buena persona y se que no lo harás... de verdad no haga eso.
 
-La función main debe ser cómo esta entonces:
-`unittest.main(testRunner = HTMLTestRunner(output = 'Reports', report_name = 'python-website-report', failfast = True))`
+Te habrás dado cuenta de que cada vez que corras la automatización se enviarán los mismos datos una y otra vez, por supuesto quieres utilizar datos distintos y es hora de que Faker entre a la acción.
 
-Si tu código es idéntico al siguiente entonces tendrás una carpeta llamada `Reports` con un archivo HTML de nombre `python-website-test` y toda la información de tu prueba hasta ahora:
+## Simulando datos aleatorios con Faker
+Ya tienes instalado este módulo y utilizarlo es muy sencillo pero aún así recomiendo que leas su [documentación](https://faker.readthedocs.io/en/master/).
+
+Primeramente importaremos el módulo Faker de la siguiente forma:
+`from faker import Faker`
+
+Antes de nuestra clase de prueba haremos una instancia local de algún país, Estados Unidos y en inglés funciona bien para evitar inconvenientes con acentos y caracteres especiales:
+`fake = Faker('en_US')`
+
+Los métodos de Faker son bastante intuitivos y leer su documentación será de gran ayuda. Por ejemplo, así se vería el envío de un nombre falso:
+`first_name.send_keys(fake.first_name_female())`
+
+Espera... ¿`send_keys` puede enviar métodos, funciones o variables?
+¡La respuesta es "Sí"! Así que ahora es tu turno para hacer lo mismo con el resto de envío de datos al formulario.
+
+¿Has pensado en que pasaría si antes de enviar los datos intentas con otros diferentes? No lo pienses más y hagamos pruebas sobre las pruebas.
+
+## Congela el tiempo e interactúa con ipdb
+En este punto ipdb también ya está instalado y podemos importarlo pero ojo porque debemos llamarlo en una línea antes de donde queremos nuestro breakpoint. Por ahora hágamoslo una vez llegamos al formulario y antes de enviar cualquier dato quedando así:
+
 ```
-from selenium import webdriver
-from time import sleep
-from pyunitreport import HTMLTestRunner
-
-class UsingUnnittest(unittest.Testcase):
-
-    def setUp(self):
-        self.driver = webdriver.Opera(executable_path = "./operadriver")
-        driver = self.driver
-        
-    def test_get_ptyhon_website(self):
-        driver = self.driver
-        driver.get("https://www.python.org")
-        
-    def tearDown(self):
-        print('Browser is about to close...')
-        sleep(3)
-        self.driver.close()
-  
-if __name__ == '__main__':
-    unittest.main(
-        verbosity = 2,
-        testRunner = HTMLTestRunner(
-            output = 'report',
-            report_name = 'python_org_report',
-            failfast = True))
-```
-
-# Localizar elementos
-## Selectores
-Dentro de una interfaz gráfica en la web podemos ubicar los elementos de la misma respecto a sus selectores como:
-- ID
-- Nombre
-- Texto del link
-- Selector de CSS
-- Texto interior
-
-También podemos ubicar a los elementos como parte del DOM por:
-- ID del elemento
-- Nombre del elemento
-- XPath
-
-### XPath
-XPath es el lenguaje utilizado para identificar nodos en XML, extendiendo su uso a identificar elementos en HTML. Estos pueden ser absolutos o relativos.
-
-Hay una discusión entre si esta debería ser nuestra última opción para ubicar a los elementos, por ejemplo cuando no hay una forma explícita de identificarlos por medio de alguna de las opciones anteriores, o si debería ser la primera por cuestiones de seguridad ya que no está exponiendo algún dato de la aplicación web.
-
-Una forma rápida de obtenerlo es haciendo click en el elemento dentro del inspector de elementos y elegir copiar su XPath absoluto o relativo.
-
-## Encontrar elementos
-
-Al ver el botón "About" de https://www.python.org con el inspector de elementos vemos que tiene la siguiente estructura:
-`<a href="/about/" title="" class="">About</a>`
-
-Y su XPath es el siguiente:
-- Absoluto
-`/html/body/div/header/div/nav/ul/li[1]/a`
-- Relativo
-`//*[@id="about"]/a`
-
-Podemos apreciar el tipo de etiqueta HTML, sus atributos y valores de los atributos.
-
-La forma en que procedemos acceder a los elementos es con el método `find_element(By.SELECTOR)` y contamos con distintas opciones:
-- class_name
-- css_selector
-- id
-- link_text
-- name
-- partial_link_name
-- tag_name
-- xpath
-
-Este botón podemos seleccionarlo escribiendo `find_element(By.LINK_TEXT, "About")` y lo almacenaremos en la variable `about_link` en caso de que deseemos usarlo.
-
-Si queremos hacer click en el podemos usar el método `click()`
-
-Nuestro código ahora ser verá así:
-```
-import unittest
-from time import sleep
-from pyunitreport import HTMLTestRunner
-
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-
-
-class UsingUnnittest(unittest.TestCase):
-
-    def setUp(self):
-        s = Service('./chromedriver')
-        self.driver = webdriver.Chrome(service = s)
-
-    def test_get_ptyhon_website(self):
-        driver = self.driver
-        driver.get('https://www.python.org')
-        button_about = driver.find_element(By.LINK_TEXT, 'About')
-        button_about.click()
-
-    def tearDown(self):
-        print('Browser is about to close...')
-        sleep(3)
-        self.driver.quit()
-
-
-if __name__ == '__main__':
-    unittest.main(
-        verbosity = 2,
-        testRunner = HTMLTestRunner(
-            output = 'report',
-            report_name = 'python_org_report',
-            failfast = True))
-```
-### Probando más selectores
-Ahora ubiquemos más elemenos del home utilizando otros selectores de manera que tu método `test_get_python()` debe quedar así:
-```
-def test_get_ptyhon_website(self):
-        driver = self.driver
-        driver.get('https://www.python.org')
-        driver.find_element(By.CLASS_NAME, 'tier-1')
-        driver.find_element(By.CSS_SELECTOR, '#community')
-        driver.find_element(By.ID, 'downloads')
-        driver.find_element(By.LINK_TEXT, 'About')
-        driver.find_element(By.NAME, 'q')
-        driver.find_element(By.TAG_NAME, 'h1')
-        driver.find_element(By.XPATH, '//*[@id="touchnav-wrapper"]/header/div/div[1]/a')
+...
+create_account_button = driver.find_element(By.LINK_TEXT, 'CREATE AN ACCOUNT')
+create_account_button.click()
+import ipdb; ipdb.set_trace()
+first_name = driver.find_element(By.ID, 'firstname')
+first_name.send_keys(fake.first_name_female())
+...
 ```
 
-## Poniendo en práctica lo aprendido
-¿Funcionó tu script? ¡Genial! Ya sabes ubicar elementos por sus distintos selectores, hacer click en ellos y recuerda que puedes almacenarlos en variables.
-Tu siguiente reto será practicar con un sitio diseñado para automatizaciones, es MUY IMPORTANTE que siempre lo hagas en aplicaciones designadas para ello pues el hacer automatizaciones en producción trae sus consecuencias.
+La forma en que llamamos a ipdb es algo diferente, comenzando porque el método `set_trace()` indica el breakpoint donde se lanzará el debugger. Corramos nuestra automatización y veamos que sucede al llegar a ese punto.
 
-### Madison Island, tu e-commerce de práctica
-[Madison Island](http://demo-store.seleniumacademy.com) es un sitio demo con el que puedes experimentar libremente, notarás que se trata de un e-commerce y tiene todos los elementos de uno real. Si por algún motivo no puedes acceder al sitio puedes probar con los siguientes que, aunque tengan distinta estructura, siguen siendo e-commerces:
-- [Madison Island, sitio alternativo 1](http://magento-demo.lexiconn.com)
-- [Madison Island, sitio alternativo 2](http://ecommerce-solution.info)
-- [Madison Island, sitio alternativo 3](http://demo.onestepcheckout.com)
-- [MyStore](http://automationpractice.com/index.php)
-- [Swag Labs](https://www.saucedemo.com)
+Veremos que en la terminal se a abierto el debugger de IPython. Acá existen distintos comandos pero nos centraremos en los esenciales:
+- Continue: Si presionas la tecla `C` el programa seguirá avanzando con normalidad 
+- Next: Si presionas la tecla `N` el programa ejecutará la línea que indica en el debugger, pausará y esperará la siguiente instrucción. Esto permite avanzar línea por línea.
+- Interacciones "en vivo": Desde el debuger de IPython también puedes enviar cualquier comando de Python o Selenium. Por ejemplo localizar elementos e interactuar con ellos ¿por qué no intentas localizar el campo de email y enviar algún dato?
 
-¡Recuerda que cuando ingreses información procura que sea información falsa/dummy y no datos verdaderos!
+Con ipdb me encanta experimentar antes de escribir código en mis archivos, así puedo darme una idea de las posibilidades que tengo y seguir mi camino ¡Es simplemente genial!
 
-### El reto
-Crea un script de pruebas donde tengas los métodos `setUp` y `tearDown`que ya hemos utilizado pero además los siguientes:
-- `test_search_text_field` que ubique el campo de búsqueda a través de su id.
-- `test_search_text_field_by_name` que ubique el campo de búsqueda a través de su atributo `name`.
-- `test_search_text_field_by_class_name` que ubique el campo de búsqueda a través de su nombre de clase.
-- `test_search_text_field_button` que ubique el botón de la barra de búsqueda con forma de 🔍 por su nombre clase.
-- `test_count_promo_banners` que ubique el elemento que contiene los 3 cuadros de promociones ("Home & Decor", "Shop Private Sales" y "Travel Gear") por su nombre de clase. Después ubica las 3 imágenes que representa cada banner en solo localizador, deberás utilizar `find_elements` (en plural).
-- `test_vip_promo`que ubique una de las imágenes del carrusel por su XPath.
-- `test_shopping_cart_icon` que ubique el ícono del carrito de compras por su selector de CSS.
+## Interactuando con más elementos
+Los sitios y aplicaciones web son más que simples formularios con campos y botones, así que veamos los siguientes elementos con los que podemos interactuar:
+- Dropdown
+- Alert
+- Pop-up
 
-¿Cómo te fue? En los archivos de esta rama encontrarás una propuesta de solución (`madison_island.py`), si lo hiciste de una forma diferente también está bien.
+### Dropdown
+Los dropdowns son estos menús tan útiles que se pueden expander y colapsar en los que encontramos opciones para elegir una.
 
-Al final en la terminal debiste tener una salida similar a esta:
+Crearemos un nuevo archivo donde para interactuar con ellos debemos importar un nuevo submódulo de Selenium:
+`from selenium.webdriver.support.ui import Select`
+
+Nos encargaremos de utilizar el dropdown para elegir un idioma distinto en nuestro e-commerce de prueba. Para identificar un elemento como dropdown debemos pasar su localizador como argumento dentro del método `Select()` de la siguiente forma:
+`language_selector = Select(driver.find_element(By.ID, 'select-language'))`
+
+Así tendremos 3 formas para elegir las opciones de nuestro dropdown:
+- `select_by_visible_text()`: usando como argumento el texto tal cual se muestra en la lista de opciones.
+- `select_by_index()`: usando como argumento el índice de los elementos en la lista, en este caso se inicia por el índice 0.
+- `select_by_value()`: dentro de la etiqueta del elemento encontraremos un atributo `value`, su valor es el que podemos utilizar cómo argumento para seleccionar dicha opción
+
+Para los primeros dos casos nuestro código sería así:
 ```
-Running tests... 
-----------------------------------------------------------------------
- test_count_of_promo_banner_images (__main__.UsingUnnittest) ... OK (7.809538)s
- test_search_button_enabled (__main__.UsingUnnittest) ... OK (6.800608)s
- test_search_text_field (__main__.UsingUnnittest) ... OK (5.762583)s
- test_search_text_field_by_name (__main__.UsingUnnittest) ... OK (9.526460)s
- test_search_text_field_class_name (__main__.UsingUnnittest) ... OK (6.087199)s
- test_shopping_cart (__main__.UsingUnnittest) ... OK (7.216527)s
- test_vip_promo (__main__.UsingUnnittest) ... OK (7.414768)s
-
-----------------------------------------------------------------------
-Ran 7 tests in 51.071s
-
-OK
+...
+language_selector = Select(driver.find_element(By.ID, 'select-language'))
+language_selector.select_by_visible_text('German')
+sleep(1)
+language_selector = Select(driver.find_element(By.ID, 'select-language'))
+language_selector.select_by_index(1)
+...
 ```
 
-En la siguiente sección prepararás assertions y una test suite.
+### Alert y Pop-Up
+Hoy en día no es común que un sitio web utilice alerts o pop-ups directamente desde JavaScript, aún así puede suceder que hagas frente a un sitio que sí lo haga y mejor saber cómo manejarlos.
+
+Creemos un nuevo archivo con la estructura que ya hemos estado manejando y un método de prueba llamado `test_compare_products_removal()` el cual tendrá las siguientes acciones:
+1. Ubicar la barra de búsqueda y realizar la búsqueda por el término "tee".
+2. Hacer click en el link "Add to compare" de alguno de los artículos.
+3. Esto hará que aparezca un menú de comparación al costado. Si hacemos click en la opción "Clear All" aparecerá un alert preguntando si deseamos eliminar la lista de comparación.
+
+Cuando aparece el alert podemos cambiar el foco del navegador hacia este con el comando `driver.switch_to_alert()` y es buena idea almacenarlo en una variable para interactuar así que podemos pensar en algo así:
+`alert = driver.switch_to_alert()`
+
+Tenemos dos opciones: aceptar o cancelar. Afortunadamente también comandos específicos para cada una:
+```
+# Aceptar
+alert.accept()
+# Cancelar
+alert.dismiss()
+# Extraer el texto del alert
+alert.text
+```
+
+Si queremos aceptar el eliminar la lista entonces esa parte del código debe quedar así:
+```
+...
+driver.find_element(By.CLASS_NAME, 'link-compare').click()
+driver.find_element(By.LINK_TEXT, 'Clear All').click()
+alert = driver.switch_to.alert()
+alert.accept()
+...
+```
+
+## Navegando cómo haría un usuario
+Hay una serie de acciones que forman parte de lo que haría un usuario cómo el ir a la página anterior/siguiente, refrescar el navegador, etc. Realmente no hay mucha ciencia detrás de ello por lo que solo listaremos los comandos y te encargarás de probarlos:
+
+### Navegación
+- `driver.get('http://demo-store.seleniumacademy.com')`: se dirige a la URL que indiquemos entre comillas.
+- `driver.current_url`: obtiene la URL de la barra del navegador.
+- `driver.back()`: simular presionar el botón "atrás" del navegador.
+- `driver.forward()`: simular presionar el botón "adelante" del navegador.
+- `driver.refresh()`: refresca la página del navegador donde te encuentras.
+- `driver.title`: obtiene el título de la página donde se encuentra el navegador.
+
+### Manejando ventanas y pestañas
+Las ventanas y pestañas son elementos independientes para Selenium por lo que cada vez que abras una nueva deberás indicar que deseas trabajar sobre la misma.
+- `driver.current_window_handle`: indicas que trabajarás en la ventana actual, es buena idea almacenarla en una variable.
+- `driver.switch_to.new_window('tab')`: abre una nueva pestaña y cambia el foco a esta.
+- `driver.switch_to.new_window('window')`: abre una nueva ventana y cambia el foco a esta.
+- `driver.close()`: cierra la pestaña actual.
+- `driver.quit()`: cierra el navegador y cierra la sesión del mismo.
+
+
+### Manejo de la ventana
+También es posible controlar las ventanas y manipularlas para cambiar su tamaño, maximizarla o minimizarla. Estos son algunos métodos:
+- `driver.get_window_size().get("width")`: obtiene el anchode la ventana.
+- `driver.get_window_size().get("height")`: obtiene el alto de la ventana.
+- `driver.set_window_size(width, height)`: cambia el tamaño de la ventana a los valores pasados cómo argumentos.
+- `driver.get_window_position().get('x')`: obtiene la posición de la ventana en su eje X.
+- `driver.get_window_position().get('y')`: obtiene la posición de la ventana en su eje Y.
+- `driver.set_window_position(X, Y)`: ubica la ventana en la posición de las coordenadas pasadas cómo argumento.
+- `driver.maximize_window()`: maximiza la ventana.
+- `driver.minimize_window()`: minimiza la ventana.
+- `driver.fullscreen_window()`: pasa la ventana a modo de pantalla completa.
+
+En los archivos de la rama encontrarás los archivos correspondientes con sugerencias de cómo realizar lo visto hasta ahora ¡Prueba, experimenta y sigue probando!
