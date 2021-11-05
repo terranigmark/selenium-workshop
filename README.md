@@ -56,6 +56,30 @@ if __name__ == '__main__':
 Siempre es buena idea comunicar a través de algún medio que estás terminando la prueba, tomar una pausa y después cerrar la instancia del navegador para evitar exceso en el uso de recursos de tu equipo. 
 Por otro lado la bandera `verbosity` con el parámetro `2` nos otorgará más detalles en el reporte de Unittest.
 
+### Assertions
+El keyword `assert` es utilizado con fines de depuración (debugging), lleva a cabo comprobaciones o validaciones de la expresión que se pasa dentro de esta y retorna un valor `True`, en caso contrario arrojará un error de tipo `AssertionError`.
+
+Un caso muy sencillo de su uso es el siguiente para validar que el título de nuestro e-commerce de prueba es el que esperamos:
+```
+website_title = driver.title
+assert website_title == 'Madison Island'
+```
+
+Por supuesto podemos utilizar assertions para fines de testing para evaluar funciones y clases para nuestro sitio de prueba. Más adelante y durante los archivos que sean generados veremos estas evaluaciones, mientras tanto veamos algunas de ellas bastante sencillas:
+```
+# Validadno que está presente la barra de búsqueda
+self.assertTrue(self.is_element_present(By.Name, 'q'))
+
+# Validando la presencia del menú de idiomas
+self.assertTrue(self.is_element_present(By.ID, 'select-language'))
+
+# Validando la cantidad de productos enconrtados
+products = driver.find_elements(By.XPATH, '//h3')
+self.assertEqual(1, len(products))
+```
+
+Utilizar assertions es algo que resulta bastante útil pues nos da una salida explícita en la terminar para verificar que las acciones deseadas se han realizado, que estamos en el sitio indicado o validar otros sin tener que depender de una serie de prints.
+
 #### Caso de prueba listo
 Hasta este punto tu código debe de verse así:
 ```
