@@ -1,86 +1,87 @@
-![](https://img.shields.io/badge/Python-v3.9.0-yellow) ![](https://img.shields.io/badge/Selenium-WebDriver-brightgreen) ![](https://img.shields.io/badge/PyUnitReport-Unit%20Testing-brightgreen)
+# 5. Sincronización de pruebas
+Cómo bien sabes la actividad en el DOM ocurre de forma asíncrona, lo que puede representar un reto para Selenium ya que no hace un seguimiento activo del estado del DOM y es común que aparezcan errores relacionados a que no se encontró un elemento porque aún no estaba visible o el sitio web tardó en cargar más de lo estimado.
 
-# Selenium Workshop (Work In Progress)
-Este repositorio se mantiene en constante actualizacion y es utilizado como tutorial para iniciarse en el uso de Selenium con Python.
+Por ejemplo, supongamos que hay un formulario en el cual el botón "Enviar" no aparece sino hasta que llenamos todos los campos requeridos y queremos hacer click en dicho botón sin haber cumplido la condición anterior. Esto generaría un error donde dicho botón no puede ser localizado a pesar de que sabemos de su existencia y lo encontramos en el código del DOM ¿entonces qué podemos hacer al respecto?
 
-## ¿Cómo puedo utilizar este repositorio?
-En la rama por default se ubica este README.md con la información general del repositorio. Navegando entre las distintas ramas y el orden numerado podrás encontrar los contenidos del tutorial como los archivos generados. Es recomendable que sigas las instrucciones en el orden de cada una.
+Lo más sencillo y, no mejor práctica, es utilizar el método `sleep` del módulo `time` para colocar una espera de "n" segundos hasta que se cumpla dicha condición pero esto trae inconvenientes cómo extender la duración de la prueba y no tener precisión en que ese sea el tiempo requerido al ser un proceso asíncrono. Para solucionarlo Selenium nos ofrece tres distintos tipos de demoras:
+- Explicit wait
+- Implicit wait
+- Fluent wait
 
-## Requisitos
-Cualquiera de los siguientes navegadores instalados:
-- Firefox
-- Safari
-- Opera
-- Chrome
-- Edge
+## Explcit wait (demoras explícitas)
+Las demoras explícitas funcionan deteniendo el proceso de ejecución de la automatización y continúan hasta que se cumpla una condición indicada. Dicha condición es llamada con una frecuencia hasta que dicho tiempo expira, por lo que se llama de forma continua a dicha condición en tanto siga retornando un valor falso.
 
-## Descripción
-Selenium es un conjunto de herramientas que nos permite automatizar acciones en nuestro navegador, dando pie a crear scripts que ayuden a realizar un proceso específico en forma automática o hacer pruebas en el frontend de un sitio web. Actualmente Selenium puede ser utilizado con distintos lenguajes, sin embargo la mayor parte de la documentación se encuentra hecha para Java y mi deseo es que otras personas que gustan del lenguaje Python comiencen a utilizarlo también PyUnitReport cómo librería para generar reportes de pruebas en formato HTML.
+Veamos un ejemplo en donde nos dirigimos a la sección de accesorios en Madison Island y ejecutamos una demora explícita hasta que se logra identificar que el título del sitio es `Jewelery - Accesories` y que el H1 de esta página es `Jwelery`:
 
-### Agenda
-Durante este taller abordaremos los siguientes temas:
-#### 1. Para iniciar
-- Presentación
-- ¿Qué es Selenium?
-- Ventajas y desventajas de Selenium
+```
+# Importamos el submódulo WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait
 
-#### 2. Preparación del entorno de trabajo
-- Instalación y Descargas
-- "Hola, mundo!" en Selenium
+# Dentro de nuestro método de prueba incluimos una función obtener el title del sitio
+def title_jewelery(driver):
+            return driver.title
+            
+# Después vamos al sitio en cuestión, definimos la demora explícita para 5 segundos,
+# localizamos el H1 y hacemos un assert para validar que es el texto que buscamos.
+driver.get('http://demo-store.seleniumacademy.com/accessories/jewelry.html')
+WebDriverWait(driver, 5).until(title_jewelery)
+el = driver.find_element(By.TAG_NAME, "h1")
+self.assertEqual(el.text, 'JEWELRY')
+```
 
-#### 3. Comandos básicos
-- Unittest
-- Selectores
-- Localizar elementos
+Así cómo utilizamos una función anónima podemos también pasar el elemento de manera explícita. Recuerda que para este caso definimos una espera máxima de 5 segundos y si durante la misma no se logra cumplir la condición tendremos que esperar a que pase este tiempo ¿te imagina que sucede si estamos en un sitio que se conecta a terceros y debemos esperar 2 o 3 minutos a una petición?
 
-#### 4. Interactual con elementos
-- TextBox, Submit Button, SendKeys() y click()
-- CheckBox, Form, RadioButton
-- Dropdown
-- Alert y Pop-Up
-- Navegación en la ventana
+### Expected conditions (condiciones esperadas)
+Podrás imaginarte que las condiciones para que una demora explícita funcione puedes ser diversas, lo cual es cierto y además pueden variar de un lenguaje a otro. En Python las más comunes son:
+- title_is
+- title_contains
+- presence_of_element_located
+- visibility_of_element_located
+- visibility_of
+- presence_of_all_elements_located
+- text_to_be_present_in_element
+- text_to_be_present_in_element_value
+- frame_to_be_available_and_switch_to_it
+- invisibility_of_element_located
+- element_to_be_clickable
+- staleness_of
+- element_to_be_selected
+- element_located_to_be_selected
+- element_selection_state_to_be
+- element_located_selection_state_to_be
+- alert_is_present
 
-#### 5. Sincronización de pruebas
-- Demora explícita (explicit await)
-- Demora implícita (implicit await)
+Veamos un ejemplo sencillo de cómo es implementarlas:
+```
+# Importamos también el submódulo expected_conditions
+from selenium.webdriver.support import expected_conditions as EC
 
-## Presentación
-Mi nombre es Héctor Vega, soy un apasionado a los videojuegos, las artes marciales y la cerverza artesanal. Aprendí a programar mientras trabajaba en Recursos humanos de TI, fue cuando descubrí Python y no tenía la menor idea de a donde me llevaría esto.
+# Definimos una demora explícita de hasta 10 segundos esperando a que se pueda hacer click en el elemento.
+el = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'firstname')))
+```
 
-## ¿Qué es Selenium?
-Selenium es un framework open source de automatización para el navegador web, compatible con diversos lenguajes de programación:
-- Java
-- C# 
-- PHP
-- Perl
-- Ruby
-- Python
+Madison Island es un sitio bastante sencillo que en general no requiere de demoras explícitas o condiciones esperadas, sin embargo es buena idea que practiques con estas.
 
-La suite de Selenium consta de 4 herramientas diferentes:
-- Selenium Integrated Development Environment (IDE)
-- Selenium Remote Control (RC), actualmente en desuso
-- WebDriver
-- Selenium Grid
+## Implicit wait (demoras implícitas)
+Las demoras implícitas llaman al DOM de forma constante para encontrar un elemento durante el tiempo que le indicamos, volviéndose bastante útil cuando no hay una condición específica y lo único que debemos esperar esa que cargue el sitio o aplicación web.
 
-Durante su evolución el proyecto Selenium Remote Control se fusionó al de WebDriver.
-A partir de este momento nos referiremos a Selenium WebDriver cómo "Selenium".
+La sintaxis es bastante sencilla, veamos un ejemplo:
+```
+driver.implicitly_wait(15)
+```
 
-## Ventajas y Desventajas
-### Ventajas
-- Fácil instalación
-- Comunicación directa con el navegador
-- Interacción realista y precisa con el navegador
-- No necesita de componentes externos
-- Compatible con diversos navegadores
-- Posee una comunidad robusta
-- Cuenta con estándares de buenas prácticas
+## Fluent wait (demoras fluidas)
+Estas demoras definen un tiempo máximo de tiempo en el que esperarán por una condición, al mismo tiempo la frecuencia con la que se verifica dicha condición. Son utilizadas principalmente para ignorar tipos específicos de excepciones cuando se buscan elementos, por ejemplo `NoSuchElementException`.
 
-### Desventajas
-- Requiere de cierto conocimiento en programación
-- No soporta nuevos navegadores tan rápido
-- No posee algún mecanismo de reportes
-- Debe generar una nueva instancia de navegador en cada uso
-- Es lento comparado con otros frameworks de testing
-- La mayoría de los recursos se limitan a Java
+Un ejemplo sería el siguiente:
+```
+wait = WebDriverWait(driver, 10, frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
+el = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id="form-validate"]/div[2]/button")))
+```
 
-A final de cuentas lo que buscamos con Selenium es imitar o automatizar las acciones de una persona en alguna aplicación web quedando a tu imaginación, lo que puede ir desde ahorrar tiempo en una tarea repetitiva hasta incluso realizar acciones maliciosas cómo una ataque de fuerza bruta.
+Podemos observar algunas cosas interesantes:
+- Primero que el método `WebDriverWait` lo almacenamos en una variable para reusarlo en la búsqueda del elemento, muy útil.
+- Dentro del mismo método estamos definiendo varias cosas: nuestro driver, el tiempo de espera, la frecuencia o número de veces que se hará dicha espera y las excepciones que ignoraremos.
+- Por último todo se coloca en la identificación de un elemento donde estamos también realizando esta espera fluida.
+
+Hasta este momento tienes ya suficiente conocimiento para automatizar prácticamente cualquier sitio, por supuesto hay muchas cosas que aprender de Selenium y hasta que actualicemos este repositorio te invito a que revises la documentación oficial.
