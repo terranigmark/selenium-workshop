@@ -30,9 +30,7 @@ class UsingUnnittest(unittest.TestCase):
         create_account_button = driver.find_element(By.LINK_TEXT, 'CREATE AN ACCOUNT')
         self.assertTrue(create_account_button.is_displayed()) and create_account_button.is_enabled())
         create_account_button.click()
-        
 
-        
         import ipdb; ipdb.set_trace()
         first_name = driver.find_element(By.ID, 'firstname')
         middle_name = driver.find_element(By.ID, 'middlename')
